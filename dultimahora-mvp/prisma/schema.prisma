@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Ingresso {
+  id        Int      @id @default(autoincrement())
+  evento    Evento   @relation(fields: [eventoId], references: [id])
+  eventoId  Int
+  nome_completo String
+  contato_whatsapp String
+  cpf String
+  qtd_ingressos Int
+  valor_un     Float
+  tipo_ingresso String
+  formato_ingresso String
+  disponivel Boolean
+  codigo_ingresso String @default(cuid()) @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendas Venda[]
+}
+
+model Evento {
+  id        Int      @id @default(autoincrement())
+  nome     String
+  banner_path   String?
+  date      DateTime
+  local     String @default("Santa Maria")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ingressos Ingresso[]
+  vendas Venda[]
+}
+
+model Venda {
+  id        Int      @id @default(autoincrement())
+  ingresso    Ingresso   @relation(fields: [ingressoId], references: [id])
+  ingressoId  Int
+  codigo_ingresso String @unique
+  evento    Evento   @relation(fields: [eventoId], references: [id])
+  eventoId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
