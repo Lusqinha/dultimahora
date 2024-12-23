@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -27,9 +27,15 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { toast } from "sonner"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
+import { api } from "@/lib/api"
+import { type Ingresso, type Evento } from "@prisma/client"
+
 const formSchema = z.object({
   fullName: z.string().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres.",
+  }),
+  cpf: z.string().min(11, {
+    message: "Digite um CPF válido.",
   }),
   whatsapp: z.string().min(11, {
     message: "Digite um número de WhatsApp válido.",
@@ -51,31 +57,51 @@ const formSchema = z.object({
   }),
 })
 
-function generateRandomPassword() {
-  return Math.random().toString(36).slice(-8)
-}
 
 export function ResaleForm() {
   const router = useRouter()
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState<string | null>(null)
+  const [events, setEvents] = useState<Evento[]>([])
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       format: "digital",
     },
-  })
+  });
+
+  useEffect(() => {
+    api.get("events").then((response) => {
+      setEvents(response.data)
+    }).catch((error) => {
+      console.error(error)
+      toast.error("Erro ao carregar eventos. Tente novamente.")
+    })
+  }, [])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const generatedPassword = generateRandomPassword()
-      setPassword(generatedPassword)
       
-      // In a real app, make API call to create new ticket listing
-      // Include the generated password in the API call
-      console.log({ ...values, password: generatedPassword })
+      api.post("tickets", {
+        nome_completo: values.fullName,
+        tipo_ingresso: values.ticketType,
+        contato_whatsapp: values.whatsapp,
+        formato_ingresso: values.format,
+        qtd_ingressos: parseInt(values.ticketCount),
+        valor_un: parseFloat(values.price),
+        cpf: values.cpf,
+        eventoId: parseInt(values.event),
+
+      }).then((response) => {
+        if (response.status === 201) {
+          setPassword(response.data.codigo_ingresso)
+        }
+      }
+      ).catch((error) => {
+        console.error(error)
+        throw new Error("Erro ao anunciar ingresso. Tente novamente.")
+      })
       
       toast.success("Ingresso anunciado com sucesso!")
-      // Don't redirect immediately, allow user to see the password
     } catch (error) {
       toast.error("Erro ao anunciar ingresso. Tente novamente.")
     }
@@ -90,6 +116,20 @@ export function ResaleForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nome Completo *</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="cpf"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>CPF *</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -125,7 +165,11 @@ export function ResaleForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="reveillon-2025">Reveillon Privilege 2025</SelectItem>
+                  {events.map((event) => (
+                    <SelectItem key={event.id} value={event.id.toString()}>
+                      {event.nome}
+                    </SelectItem>
+                  ))}
                   <SelectItem value="other">Outro Evento</SelectItem>
                 </SelectContent>
               </Select>

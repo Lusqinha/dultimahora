@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
 
-// quero utilizar o id informado no endereço, com por exemplo /api/events/1 para buscar o evento com id 1
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
     
     const {id} = params;
@@ -58,13 +57,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(evento, { status: 201 });
 }
 
-export async function PUT(req: NextRequest) {
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
 
     if (!req.body) {
         return NextResponse.json({ error: "Missing body" }, { status: 400 });
     }
 
-    const { id, nome, date, local, banner_path } = await req.json();
+    const id = parseInt(params.id);
+
+
+    const {nome, date, local, banner_path } = await req.json();
 
     const evento = await prisma.evento.update({
         where: {
@@ -81,13 +83,9 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(evento);
 }
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
 
-    if (!req.body) {
-        return NextResponse.json({ error: "Missing body" }, { status: 400 });
-    }
-
-    const { id } = await req.json();
+    const id = parseInt(params.id);
 
     const evento = await prisma.evento.delete({
         where: {

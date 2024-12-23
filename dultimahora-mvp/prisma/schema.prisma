@@ -21,7 +21,7 @@ model Ingresso {
   valor_un     Float
   tipo_ingresso String
   formato_ingresso String
-  disponivel Boolean
+  disponivel Boolean @default(true)
   codigo_ingresso String @default(cuid()) @unique
 
   createdAt DateTime @default(now())

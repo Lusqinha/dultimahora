@@ -41,39 +41,15 @@ export async function GET(_req: Request, { params }: { params: { id?: string, co
 
 }
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
 
     if (!req.body) {
         return NextResponse.json({ error: "Missing body" }, { status: 400 });
     }
+
+    const id = parseInt(params.id);
 
     const { nome_completo, tipo_ingresso, codigo_ingresso, contato_whatsapp, formato_ingresso, disponivel, qtd_ingressos, valor_un, cpf, eventoId } = await req.json();
-
-    const ingresso = await prisma.ingresso.create({
-        data: {
-            contato_whatsapp,
-            formato_ingresso,
-            codigo_ingresso,
-            nome_completo,
-            qtd_ingressos,
-            tipo_ingresso,
-            disponivel,
-            valor_un,
-            eventoId,
-            cpf,
-        }
-    })
-
-    return NextResponse.json(ingresso, { status: 201 });
-}
-
-export async function PUT(req: NextRequest) {
-
-    if (!req.body) {
-        return NextResponse.json({ error: "Missing body" }, { status: 400 });
-    }
-
-    const { id, nome_completo, tipo_ingresso, codigo_ingresso, contato_whatsapp, formato_ingresso, disponivel, qtd_ingressos, valor_un, cpf, eventoId } = await req.json();
 
     const ingresso = await prisma.ingresso.update({
         where: {
@@ -82,11 +58,9 @@ export async function PUT(req: NextRequest) {
         data: {
             contato_whatsapp,
             formato_ingresso,
-            codigo_ingresso,
             nome_completo,
             qtd_ingressos,
             tipo_ingresso,
-            disponivel,
             valor_un,
             eventoId,
             cpf,
@@ -96,9 +70,9 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(ingresso, { status: 200 });
 }
 
-export async function DELETE({ params }: { params: { id: number } }) {
+export async function DELETE( _req:NextRequest, { params }: { params: { id: string } }) {
 
-    const { id } = params;
+    const id = parseInt(params.id);
 
     await prisma.ingresso.delete({
         where: {
