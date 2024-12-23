@@ -1,16 +1,8 @@
 import { TicketCard } from "@/components/ticket-card"
-
-export interface Ticket {
-  id: string
-  seller: string
-  quantity: number
-  price: number
-  format: "Digital" | "Físico"
-  type: string
-}
+import { Ingresso } from "@prisma/client"
 
 interface TicketListProps {
-  tickets: Ticket[]
+  tickets: Ingresso[]
 }
 
 export function TicketList({ tickets }: TicketListProps) {

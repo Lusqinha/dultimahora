@@ -1,45 +1,39 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronRight } from 'lucide-react'
+import { ChevronRightIcon } from 'lucide-react'
+import { Ingresso } from "@prisma/client"
 
-interface TicketCardProps {
-  id: string
-  seller: string
-  quantity: number
-  price: number
-  format: "Digital" | "Físico"
-  type: string
-}
+interface TicketCardProps extends Ingresso{}
 
-export function TicketCard({ id, seller, quantity, price, format, type }: TicketCardProps) {
+export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso, nome_completo, disponivel, valor_un }: TicketCardProps) {
   return (
     <Link href={`/tickets/${id}`}>
-      <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-        <CardContent className="p-4">
+      <Card className="bg-white hover:bg-stone-800 hover:text-[#FBC004]  ease-in-out transition-all shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] m-3 sm:m-auto max-w-[400px] mx-auto rounded-[50px] rounded-ss-none rounded-br-none ">
+        <CardContent className=" mx-5 p-4">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                {seller} ofereceu:
+              <p className=" font-bold">
+                {nome_completo} ofereceu:
               </p>
               <div className="flex items-center gap-2">
                 <span className="font-semibold">
-                  {quantity} {quantity > 1 ? 'Entradas' : 'Entrada'}
+                  {qtd_ingressos} {qtd_ingressos > 1 ? 'Entradas' : 'Entrada'}
                 </span>
                 <span>-</span>
                 <span className="font-semibold">
-                  R$ {price.toFixed(2)}
+                  R$ {valor_un.toFixed(2)}
                 </span>
               </div>
               <div className="flex gap-4 text-sm text-muted-foreground">
                 <div>
-                  Form: <span className="text-foreground">{format}</span>
+                  Form: <span className="text-foreground">{formato_ingresso}</span>
                 </div>
                 <div>
-                  Tipo: <span className="text-foreground">{type}</span>
+                  Tipo: <span className="text-foreground">{tipo_ingresso}</span>
                 </div>
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-[#FBC004]" />
+            <ChevronRightIcon className="h-7 w-7 text-[#FBC004] font-extrabold" />
           </div>
         </CardContent>
       </Card>

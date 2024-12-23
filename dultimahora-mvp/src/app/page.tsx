@@ -1,21 +1,23 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Search, Ticket } from 'lucide-react'
+"use client"
+
 import { ActionButton } from "@/components/action-button"
 import { WaveDivider } from "@/components/wave-divider"
 import EventCard from "@/components/event-card"
-
-const MOCK_EVENTS = [
-  {
-    id: "reveillon-2025",
-    title: "Reveillon Privilege 2025",
-    imageUrl: "/placeholder.svg?height=200&width=400",
-    hasTickets: true
-  },
-  // Add more events as needed
-]
+import { type Evento } from "@prisma/client"
+import { Search, Ticket } from 'lucide-react'
+import { useEffect, useState } from "react"
+import { api } from "@/lib/api"
+import Link from "next/link"
 
 export default function HomePage() {
+
+  const [events, setEvents] = useState<Evento[]>([])
+  useEffect(() => {
+    api.get('events', {}).then((response) => {
+      setEvents(response.data)
+    })}, [])
+
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -59,7 +61,7 @@ export default function HomePage() {
             Eventos Disponíveis
           </h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {MOCK_EVENTS.map((event) => (
+            {events.map((event) => (
               <EventCard key={event.id} {...event} />
             ))}
           </div>

@@ -1,13 +1,16 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
 
-export async function GET( { params } : {params : { id:number }} ) {
+// quero utilizar o id informado no endereço, com por exemplo /api/events/1 para buscar o evento com id 1
+export async function GET(_req: Request, { params }: { params: { id: string } }) {
+    
+    const {id} = params;
 
-    const { id } = params;
-
+    const eventId = parseInt(id);
+    
     const event = await prisma.evento.findUniqueOrThrow({
         where: {
-            id
+            id: eventId
         },
         select: {
             id: true,

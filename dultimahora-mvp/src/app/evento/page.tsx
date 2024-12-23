@@ -3,15 +3,6 @@ import { Search } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event-card"
 
-const MOCK_EVENTS = [
-  {
-    id: "reveillon-2025",
-    title: "Reveillon Privilege 2025",
-    imageUrl: "/placeholder.svg?height=200&width=400",
-    hasTickets: true
-  },
-  // Add more events as needed
-]
 
 export default function EventsPage() {
   return (
