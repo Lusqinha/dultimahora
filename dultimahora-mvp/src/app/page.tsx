@@ -32,7 +32,7 @@ export default function HomePage() {
           </h1>
 
           <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-            <Link href="/events">
+            <Link href="/evento">
               <ActionButton className="w-full md:w-auto text-white font-extrabold"
                 icon={<Search className="w-6 h-6" />}
               >

@@ -79,7 +79,7 @@ export default function EditTicketPage({ params }: EditTicketPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen ">
       <header className="bg-[#3F7EA7] p-4">
         <div className="max-w-xl mx-auto">
           <Image

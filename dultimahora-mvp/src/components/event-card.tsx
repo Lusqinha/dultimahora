@@ -13,7 +13,7 @@ export default function EventCard({ id, nome, banner_path }: Evento) {
             <img 
               src={banner_path || '/placeholder.svg?height=200&width=400'} 
               alt={nome}
-              className="w-full h-[200px] object-contain bg-black/40"
+              className="w-full h-[200px] object-cover bg-black/40"
             />
             <div className="absolute top-0 left-0 bg-[#FBC004] px-3 py-1">
               <h3 className="text-black font-medium">{ nome }</h3>

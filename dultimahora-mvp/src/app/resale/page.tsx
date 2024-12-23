@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export default function ResalePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       <div className="max-w-xl mx-auto px-4 py-8">
         {/* Info Box */}
         <div className="relative my-8">
@@ -17,11 +17,8 @@ export default function ResalePage() {
           <div className="bg-[#FBC004] rounded-2xl p-6 pt-8">
             <p className="text-justify text-white font-bold [text-align-last:center]">
               O D'Ultimahora é uma plataforma para unir quem quer vender,
-              <br />
               com quem quer comprar, sem qualquer taxa ou cobrança.
-              <br />
               Ao anunciar seu ingresso os interessados irão lhe chamar, e a
-              <br />
               negociação é por sua conta...
             </p>
           </div>

@@ -1,12 +1,25 @@
-import Image from "next/image"
+"use client"
+
 import { Search } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { type Evento } from '@prisma/client'
+import { api } from '@/lib/api'
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event-card"
 
 
 export default function EventsPage() {
+
+  const [events, setEvents] = useState<Evento[]>([])
+  useEffect(() => {
+    api.get('events', {}).then((response) => {
+      setEvents(response.data)
+    })
+  }, [])
+  
+
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold text-center text-[#3F7EA7] mb-8">
           Eventos Disponíveis
@@ -21,7 +34,7 @@ export default function EventsPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {MOCK_EVENTS.map((event) => (
+          {events.map((event) => (
             <EventCard key={event.id} {...event} />
           ))}
         </div>
