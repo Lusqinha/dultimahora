@@ -6,21 +6,6 @@ export async function POST(req: NextRequest) {
 
     console.log("Payload recebido:", data);
 
-
-    /*
-    Payload recebido: {
-  nome_completo: 'Bruna Meotti',
-  tipo_ingresso: 'Camarote',
-  contato_whatsapp: '53991939740',
-  formato_ingresso: 'digital',
-  qtd_ingressos: 1,
-  valor_un: 500,
-  cpf: '03485131008',
-  eventoId: 1
-}
-    
-    */
-
     const ingresso = await prisma.ingresso.create({
         data: {
             nome_completo: data.nome_completo,

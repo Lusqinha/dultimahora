@@ -64,8 +64,6 @@ export function EditTicketForm({ defaultValues }: EditTicketFormProps) {
     try {
       // In a real app, make API call to update ticket
       console.log(values)
-      toast.success("Anúncio atualizado com sucesso!")
-      router.push(`/tickets/${defaultValues.id}`)
     } catch (error) {
       toast.error("Erro ao atualizar anúncio. Tente novamente.")
     }

@@ -114,7 +114,7 @@ export default function TicketDetailsPage() {
 
         {/* Edit Button */}
         <div className="mb-8">
-          <Link href={`/tickets/edit/${params.id}`}>
+          <Link href={`/ingresso/editar`}>
             <Button 
               variant="outline" 
               className="w-full border-[#3F7EA7] text-[#3F7EA7] hover:bg-[#3F7EA7] hover:text-white"

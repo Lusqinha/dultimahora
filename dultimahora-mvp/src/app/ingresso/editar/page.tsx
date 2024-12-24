@@ -6,54 +6,42 @@ import { EditTicketForm } from "@/components/edit-ticket-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import { api } from "@/lib/api"
+import { type Ingresso } from "@prisma/client"
 
-interface EditTicketPageProps {
-  params: {
-    id: string
-  }
-}
 
-export default function EditTicketPage({ params }: EditTicketPageProps) {
+export default function EditTicketPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [ticketDetails, setTicketDetails] = useState<Ingresso>()
   const [password, setPassword] = useState("")
-
-  // In a real app, fetch ticket details based on params.id
-  const ticketDetails = {
-    id: params.id,
-    fullName: "Jaíne Stolte",
-    whatsapp: "5599999999",
-    event: "reveillon-2025",
-    ticketCount: "1",
-    ticketType: "Pista",
-    format: "digital",
-    price: "185.00"
-  }
+  const [cpf, setCpf] = useState("")
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, verify the password with an API call
-    if (password === "correct_password") { // Replace with actual verification
-      setIsAuthenticated(true)
-    } else {
-      toast.error("Senha incorreta. Tente novamente.")
+    
+    if (!password || !cpf) {
+      toast.error("Preencha todos os campos.")
+      return
     }
+
+    try {
+      const response = await api.post("tickets/verify", {
+        codigo_ingresso: password,
+        cpf
+      })
+      if (response.data) {
+        setIsAuthenticated(true)
+        setTicketDetails(response.data)
+      }
+    } catch (err) {
+      console.error(err)
+      toast.error("Senha inválida.")
+
   }
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-white">
-        <header className="bg-[#3F7EA7] p-4">
-          <div className="max-w-xl mx-auto">
-            <Image
-              src="/placeholder.svg?height=60&width=200"
-              alt="D'Ultima Hora Logo"
-              width={200}
-              height={60}
-              className="mx-auto h-12 w-auto"
-            />
-          </div>
-        </header>
-
+      <section className="min-h-screen">
         <div className="max-w-xl mx-auto px-4 py-8">
           <h1 className="text-2xl font-bold text-center text-[#3F7EA7] mb-8">
             Digite a senha para editar o anúncio
@@ -66,6 +54,12 @@ export default function EditTicketPage({ params }: EditTicketPageProps) {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Digite a senha do anúncio"
             />
+            <Input
+              type="text"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+              placeholder="Digite seu CPF"
+            />
             <Button 
               type="submit" 
               className="w-full bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
@@ -74,32 +68,34 @@ export default function EditTicketPage({ params }: EditTicketPageProps) {
             </Button>
           </form>
         </div>
-      </main>
+      </section>
     )
   }
 
   return (
     <main className="min-h-screen ">
-      <header className="bg-[#3F7EA7] p-4">
-        <div className="max-w-xl mx-auto">
-          <Image
-            src="/placeholder.svg?height=60&width=200"
-            alt="D'Ultima Hora Logo"
-            width={200}
-            height={60}
-            className="mx-auto h-12 w-auto"
-          />
-        </div>
-      </header>
 
       <div className="max-w-xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold text-center text-[#3F7EA7] mb-8">
           Editar Anúncio
         </h1>
 
-        <EditTicketForm defaultValues={ticketDetails} />
+        {ticketDetails && (
+          <EditTicketForm
+            defaultValues={{
+              fullName: ticketDetails.nome_completo,
+              whatsapp: ticketDetails.contato_whatsapp,
+              event: ticketDetails.eventoId.toString(),
+              ticketCount: ticketDetails.qtd_ingressos.toString(),
+              ticketType: ticketDetails.tipo_ingresso,
+              format: ticketDetails.formato_ingresso as "digital" | "physical",
+              price: ticketDetails.valor_un.toString(),
+            }}
+          />
+        )}
       </div>
     </main>
   )
+  }
 }
 
