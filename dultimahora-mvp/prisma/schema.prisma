@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -33,7 +30,8 @@ model Ingresso {
 model Evento {
   id        Int      @id @default(autoincrement())
   nome     String
-  banner_path   String?
+  banner_path   String? @default("/img/dultimahora-evento-placeholder.png")
+  evento_weblink String?
   date      DateTime
   local     String @default("Santa Maria")
   createdAt DateTime @default(now())

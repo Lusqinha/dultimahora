@@ -3,9 +3,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ChevronRightIcon } from 'lucide-react'
 import { Ingresso } from "@prisma/client"
 
-interface TicketCardProps extends Ingresso{}
-
-export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso, nome_completo, disponivel, valor_un }: TicketCardProps) {
+export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso, nome_completo, valor_un }: Ingresso) {
   return (
     <Link href={`/ingresso/${id}`}>
       <Card className="bg-white hover:bg-stone-800 hover:text-[#FBC004]  ease-in-out transition-all shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] m-3 sm:m-auto max-w-[400px] mx-auto rounded-[50px] rounded-ss-none rounded-br-none ">

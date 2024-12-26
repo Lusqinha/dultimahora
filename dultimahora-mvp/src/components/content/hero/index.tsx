@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
-import Image from "next/image";
 
 export function Hero() {
     return (

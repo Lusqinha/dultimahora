@@ -1,16 +1,16 @@
 'use client'
 
-import { useState } from "react"
-import Image from "next/image"
 import { EditTicketForm } from "@/components/edit-ticket-form"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
-import { api } from "@/lib/api"
+import { Input } from "@/components/ui/input"
 import { type Ingresso } from "@prisma/client"
+import { useState } from "react"
+import { api } from "@/lib/api"
+import { toast } from "sonner"
 
 
 export default function EditTicketPage() {
+
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [ticketDetails, setTicketDetails] = useState<Ingresso>()
   const [password, setPassword] = useState("")
@@ -37,9 +37,35 @@ export default function EditTicketPage() {
       console.error(err)
       toast.error("Senha inválida.")
 
+    }
+    
   }
+    if (isAuthenticated) {
+      return (
+        <main className="min-h-screen ">
 
-  if (!isAuthenticated) {
+          <div className="max-w-xl mx-auto px-4 py-8">
+            <h1 className="text-2xl font-bold text-center text-[#3F7EA7] mb-8">
+              Editar Anúncio
+            </h1>
+
+            {ticketDetails && (
+              <EditTicketForm ticketId={ticketDetails.id}
+                defaultValues={{
+                  fullName: ticketDetails.nome_completo,
+                  whatsapp: parseInt(ticketDetails.contato_whatsapp),
+                  event: ticketDetails.eventoId.toString(),
+                  ticketCount: ticketDetails.qtd_ingressos.toString(),
+                  ticketType: ticketDetails.tipo_ingresso,
+                  format: ticketDetails.formato_ingresso as "digital" | "physical",
+                  price: ticketDetails.valor_un.toString(),
+                }}
+              />
+            )}
+          </div>
+        </main>
+      )
+    }
     return (
       <section className="min-h-screen">
         <div className="max-w-xl mx-auto px-4 py-8">
@@ -49,7 +75,7 @@ export default function EditTicketPage() {
 
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
             <Input
-              type="password"
+              type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Digite a senha do anúncio"
@@ -71,31 +97,4 @@ export default function EditTicketPage() {
       </section>
     )
   }
-
-  return (
-    <main className="min-h-screen ">
-
-      <div className="max-w-xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold text-center text-[#3F7EA7] mb-8">
-          Editar Anúncio
-        </h1>
-
-        {ticketDetails && (
-          <EditTicketForm
-            defaultValues={{
-              fullName: ticketDetails.nome_completo,
-              whatsapp: ticketDetails.contato_whatsapp,
-              event: ticketDetails.eventoId.toString(),
-              ticketCount: ticketDetails.qtd_ingressos.toString(),
-              ticketType: ticketDetails.tipo_ingresso,
-              format: ticketDetails.formato_ingresso as "digital" | "physical",
-              price: ticketDetails.valor_un.toString(),
-            }}
-          />
-        )}
-      </div>
-    </main>
-  )
-  }
-}
 

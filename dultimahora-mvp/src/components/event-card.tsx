@@ -1,7 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
 import { type Evento } from "@prisma/client"
 import Link from "next/link"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { Switch } from "@/components/ui/switch"
+
 
 
 export default function EventCard({ id, nome, banner_path }: Evento) {
@@ -11,7 +13,7 @@ export default function EventCard({ id, nome, banner_path }: Evento) {
         <CardContent className="p-0">
           <div className="relative">
             <img 
-              src={banner_path || '/placeholder.svg?height=200&width=400'} 
+              src={banner_path || 'img/dultimahora-evento-placeholder.png'} 
               alt={nome}
               className="w-full h-[200px] object-cover bg-black/40"
             />

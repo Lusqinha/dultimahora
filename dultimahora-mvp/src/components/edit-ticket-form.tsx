@@ -1,10 +1,12 @@
 'use client'
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useRouter } from "next/navigation"
-
+import { api } from "@/lib/api"
+import { Evento} from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -29,7 +31,7 @@ const formSchema = z.object({
   fullName: z.string().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres.",
   }),
-  whatsapp: z.string().min(11, {
+  whatsapp: z.number().min(11, {
     message: "Digite um número de WhatsApp válido.",
   }),
   event: z.string({
@@ -50,11 +52,28 @@ const formSchema = z.object({
 })
 
 interface EditTicketFormProps {
-  defaultValues: z.infer<typeof formSchema>
+  defaultValues: z.infer<typeof formSchema>,
+  ticketId: number
 }
 
-export function EditTicketForm({ defaultValues }: EditTicketFormProps) {
+export function EditTicketForm({ defaultValues, ticketId }: EditTicketFormProps) {
   const router = useRouter()
+
+  const [events, setEvents] = useState<Evento[]>([])
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.get("events")
+        setEvents(response.data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    fetchEvents()
+  }, [])
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -62,9 +81,18 @@ export function EditTicketForm({ defaultValues }: EditTicketFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // In a real app, make API call to update ticket
+      api.patch(`tickets/${ticketId}`, {
+        nome_completo: values.fullName,
+        tipo_ingresso: values.ticketType,
+        contato_whatsapp: values.whatsapp.toString(),
+        formato_ingresso: values.format,
+        qtd_ingressos: parseInt(values.ticketCount),
+        valor_un: parseFloat(values.price),
+        eventoId: parseInt(values.event),
+      })
       console.log(values)
     } catch (error) {
+      console.error(error)
       toast.error("Erro ao atualizar anúncio. Tente novamente.")
     }
   }
@@ -72,10 +100,11 @@ export function EditTicketForm({ defaultValues }: EditTicketFormProps) {
   function onDelete() {
     if (window.confirm("Tem certeza que deseja excluir este anúncio?")) {
       try {
-        // In a real app, make API call to delete ticket
+        api.delete(`tickets/${ticketId}`)
         toast.success("Anúncio excluído com sucesso!")
         router.push("/")
       } catch (error) {
+        console.error(error)
         toast.error("Erro ao excluir anúncio. Tente novamente.")
       }
     }
@@ -125,8 +154,12 @@ export function EditTicketForm({ defaultValues }: EditTicketFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="reveillon-2025">Reveillon Privilege 2025</SelectItem>
-                  <SelectItem value="other">Outro Evento</SelectItem>
+                  {events.map((event) => (
+                    <SelectItem key={event.id} value={event.id.toString()}>
+                      {event.nome}
+                    </SelectItem>
+                  ))}
+
                 </SelectContent>
               </Select>
               <FormMessage />

@@ -6,14 +6,6 @@ interface ticketidParams {
     id?: string;
   };
 }
-interface ticketParams {
-  body: {
-    ingresso: {
-      codigo: string;
-      cpf: string;
-    };
-  };
-}
 
 export async function GET(_req: Request, { params }: ticketidParams) {
   const { id } = params;
@@ -45,42 +37,33 @@ export async function GET(_req: Request, { params }: ticketidParams) {
   return NextResponse.json(ingresso, { status: 200 });
 }
 
-export async function PUT(
+export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params:Promise<{id:string}> },
 ) {
   if (!req.body) {
     return NextResponse.json({ error: "Missing body" }, { status: 400 });
   }
 
-  const id = parseInt(params.id);
+  const {id} = await params;
 
-  const {
-    nome_completo,
-    tipo_ingresso,
-    codigo_ingresso,
-    contato_whatsapp,
-    formato_ingresso,
-    disponivel,
-    qtd_ingressos,
-    valor_un,
-    cpf,
-    eventoId,
-  } = await req.json();
+    const data = await req.json();
+    console.log("Payload recebido:", data);
+    console.log("ID:", id);
 
   const ingresso = await prisma.ingresso.update({
     where: {
-      id,
-    },
-    data: {
-      contato_whatsapp,
-      formato_ingresso,
-      nome_completo,
-      qtd_ingressos,
-      tipo_ingresso,
-      valor_un,
-      eventoId,
-      cpf,
+      id: parseInt(id),
+      },
+
+      data: {
+        nome_completo: data.nome_completo,
+        tipo_ingresso: data.tipo_ingresso,
+        contato_whatsapp: data.contato_whatsapp,
+        formato_ingresso: data.formato_ingresso,
+        qtd_ingressos: data.qtd_ingressos,
+        valor_un: data.valor_un,
+        eventoId: data.eventoId,
     },
   });
 

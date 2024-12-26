@@ -1,12 +1,14 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { type Evento } from "@prisma/client";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,21 +16,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "sonner"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+} from "@/components/ui/select";
+import { api } from "@/lib/api";
 
-import { api } from "@/lib/api"
-import { type Ingresso, type Evento } from "@prisma/client"
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -55,13 +54,11 @@ const formSchema = z.object({
   price: z.string().min(1, {
     message: "Informe o valor do ingresso.",
   }),
-})
-
+});
 
 export function ResaleForm() {
-  const router = useRouter()
-  const [password, setPassword] = useState<string | null>(null)
-  const [events, setEvents] = useState<Evento[]>([])
+  const [password, setPassword] = useState<string | null>(null);
+  const [events, setEvents] = useState<Evento[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,41 +66,49 @@ export function ResaleForm() {
     },
   });
 
+  const fetchEvents = () => {
+    api
+      .get("events")
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Erro ao carregar eventos. Tente novamente.");
+      });
+  };
+
   useEffect(() => {
-    api.get("events").then((response) => {
-      setEvents(response.data)
-    }).catch((error) => {
-      console.error(error)
-      toast.error("Erro ao carregar eventos. Tente novamente.")
-    })
-  }, [])
+    fetchEvents();
+  }, []);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      
-      api.post("tickets", {
-        nome_completo: values.fullName,
-        tipo_ingresso: values.ticketType,
-        contato_whatsapp: values.whatsapp,
-        formato_ingresso: values.format,
-        qtd_ingressos: parseInt(values.ticketCount),
-        valor_un: parseFloat(values.price),
-        cpf: values.cpf,
-        eventoId: parseInt(values.event),
+      api
+        .post("tickets", {
+          nome_completo: values.fullName,
+          tipo_ingresso: values.ticketType,
+          contato_whatsapp: values.whatsapp,
+          formato_ingresso: values.format,
+          qtd_ingressos: parseInt(values.ticketCount),
+          valor_un: parseFloat(values.price),
+          cpf: values.cpf,
+          eventoId: parseInt(values.event),
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            setPassword(response.data.codigo_ingresso);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          throw new Error("Erro ao anunciar ingresso. Tente novamente.");
+        });
 
-      }).then((response) => {
-        if (response.status === 201) {
-          setPassword(response.data.codigo_ingresso)
-        }
-      }
-      ).catch((error) => {
-        console.error(error)
-        throw new Error("Erro ao anunciar ingresso. Tente novamente.")
-      })
-      
-      toast.success("Ingresso anunciado com sucesso!")
+      toast.success("Ingresso anunciado com sucesso!");
     } catch (error) {
-      toast.error("Erro ao anunciar ingresso. Tente novamente.")
+      console.error(error);
+      toast.error("Erro ao anunciar ingresso. Tente novamente.");
     }
   }
 
@@ -158,21 +163,25 @@ export function ResaleForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Selecione o Evento *</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione um evento" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {events.map((event) => (
-                    <SelectItem key={event.id} value={event.id.toString()}>
-                      {event.nome}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="other">Outro Evento</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex items-center">
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione um evento" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {events.map((event) => (
+                      <SelectItem key={event.id} value={event.id.toString()}>
+                        {event.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -185,7 +194,10 @@ export function ResaleForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Número de Ingressos *</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Quantidade" />
@@ -235,17 +247,13 @@ export function ResaleForm() {
                     <FormControl>
                       <RadioGroupItem value="digital" />
                     </FormControl>
-                    <FormLabel className="font-normal">
-                      Digital
-                    </FormLabel>
+                    <FormLabel className="font-normal">Digital</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
                       <RadioGroupItem value="physical" />
                     </FormControl>
-                    <FormLabel className="font-normal">
-                      Físico
-                    </FormLabel>
+                    <FormLabel className="font-normal">Físico</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -268,8 +276,8 @@ export function ResaleForm() {
           )}
         />
 
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           className="w-full bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
         >
           Anunciar Ingresso
@@ -281,12 +289,12 @@ export function ResaleForm() {
             <AlertDescription>
               Sua senha para editar este anúncio é: <strong>{password}</strong>
               <br />
-              Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro.
+              Por favor, guarde esta senha em um local seguro. Você precisará
+              dela para editar seu anúncio no futuro.
             </AlertDescription>
           </Alert>
         )}
       </form>
     </Form>
-  )
+  );
 }
-
