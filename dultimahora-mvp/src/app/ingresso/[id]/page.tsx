@@ -2,7 +2,6 @@
 
 import Image from "next/image"
 import { useParams } from "next/navigation"
-import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { api } from "@/lib/api"
 import { useState, useEffect } from "react"
@@ -73,9 +72,9 @@ export default function TicketDetailsPage() {
           />
           <div className="bg-[#FBC004] rounded-2xl p-6 pt-8">
             <p className="text-justify text-white font-bold [text-align-last:center]">
-              O D'Ultimahora é uma plataforma para unir quem quer vender,
+              {`O D'Ultimahora é uma plataforma para unir quem quer vender,
               com quem quer comprar, lembre-se de tomar cuidado ao fazer
-              a negociação, escolher lugares públicos, se certificar etc...
+              a negociação, escolher lugares públicos, se certificar etc...`}
             </p>
           </div>
         </div>

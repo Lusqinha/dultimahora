@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { type Evento } from "@prisma/client"
 import Link from "next/link"
 
