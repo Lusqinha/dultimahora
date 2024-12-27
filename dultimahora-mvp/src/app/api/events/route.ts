@@ -32,7 +32,7 @@ export async function POST(req: NextResponse) {
     let file_path: string | undefined;
 
     if (file) {
-        const random_name = `${Math.random().toString(36).substring(2)}`
+        const random_name = `${Math.random().toString(36).substring(2)}-${file.name}`
 
         const data_file = await file.arrayBuffer()
         const save_path = path.join(process.cwd(), 'public', 'banners', random_name)
