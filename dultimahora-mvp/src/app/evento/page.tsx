@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = 'force-dynamic';
 
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -8,9 +7,11 @@ import { api } from '@/lib/api'
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event-card"
 
-
+export const dynamic = 'force-dynamic';
 
 export default function EventsPage() {
+
+  
 
   const [events, setEvents] = useState<Evento[]>([])
   useEffect(() => {
