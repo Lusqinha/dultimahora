@@ -1,5 +1,6 @@
 import { EventRegistrationForm } from "@/components/event-form";
 
+export const dynamic = 'force-dynamic';
 
 export default function CreateEventPage() {
     return (
