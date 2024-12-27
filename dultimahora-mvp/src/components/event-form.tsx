@@ -28,7 +28,10 @@ const formSchema = z.object({
         message: "Data inválida.",
     }),
     link: z.string().url().optional().or(z.literal('')),
-    banner: z.instanceof(File).optional(),
+    banner: z.any().optional().refine(
+        (file) => !file || file instanceof File,
+        { message: "O banner deve ser um arquivo válido." }
+    ),
 })
 
 export function EventRegistrationForm() {
@@ -129,7 +132,7 @@ export function EventRegistrationForm() {
                                     ref={field.ref}
                                     onChange={(e) => {
                                         const file = e.target.files?.[0];
-                                        field.onChange(file);
+                                        field.onChange(file || null); // Garante que passe `null` se nenhum arquivo for selecionado
                                     }}
                                 />
                             </FormControl>
