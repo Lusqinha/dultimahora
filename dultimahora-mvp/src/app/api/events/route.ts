@@ -27,13 +27,14 @@ export async function POST(req: NextResponse) {
     const formData = await req.formData();
     console.log("Payload recebido:", formData);
 
-    const file = formData.get("banner") as File
+    const file = formData.get("banner") as Blob
 
     let file_path: string | undefined;
 
     if (file) {
-        const random_name = `${Math.random().toString(36).substring(2)}-${file.name}`
-
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const fileName = "name" in file ? (file as any).name : "default_name";
+        const random_name = `${Math.random().toString(36).substring(2)}-${fileName}`;
         const data_file = await file.arrayBuffer()
         const save_path = path.join(process.cwd(), 'public', 'banners', random_name)
         await fs.writeFile(save_path, Buffer.from(data_file))
