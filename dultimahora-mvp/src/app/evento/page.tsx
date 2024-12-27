@@ -1,4 +1,5 @@
-"use client"
+"use client";
+export const dynamic = 'force-dynamic';
 
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -6,6 +7,7 @@ import { type Evento } from '@prisma/client'
 import { api } from '@/lib/api'
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event-card"
+
 
 
 export default function EventsPage() {

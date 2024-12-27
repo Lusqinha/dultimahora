@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = 'force-dynamic';
 
 import { Evento as PrismaEvento, Ingresso } from "@prisma/client";
 import { Mic2Icon, CalendarDaysIcon } from "lucide-react";
@@ -11,6 +12,7 @@ import { api } from "@/lib/api";
 interface Evento extends PrismaEvento {
   ingressos: Ingresso[];
 }
+
 
 
 export default function EventPage() {
