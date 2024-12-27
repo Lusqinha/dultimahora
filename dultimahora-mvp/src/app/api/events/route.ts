@@ -28,7 +28,6 @@ export async function POST(req: NextResponse) {
     console.log("Payload recebido:", formData);
 
     const file = formData.get("banner") as File
-    console.log ("file----", file)
 
     let file_path: string | undefined;
 
