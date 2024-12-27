@@ -14,7 +14,7 @@ export default function EventCard({ id, nome, banner_path }: Evento) {
         <CardContent className="p-0">
           <div className="relative">
             <img 
-              src={banner_path || 'img/dultimahora-evento-placeholder.png'} 
+              src={banner_path || 'banners/dultimahora-evento-placeholder.png'} 
               alt={nome}
               className="w-full h-[200px] object-cover bg-black/40"
             />

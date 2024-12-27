@@ -7,11 +7,8 @@ import { api } from '@/lib/api'
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event-card"
 
-export const dynamic = 'force-dynamic';
 
 export default function EventsPage() {
-
-  
 
   const [events, setEvents] = useState<Evento[]>([])
   useEffect(() => {

@@ -12,10 +12,6 @@ interface Evento extends PrismaEvento {
   ingressos: Ingresso[];
 }
 
-export const dynamic = 'force-dynamic';
-
-
-
 export default function EventPage() {
 
   const params = useParams();
@@ -39,7 +35,7 @@ export default function EventPage() {
     fetchEvent();
   }, [event_id, params]);
 
-  const banner = event?.banner_path || '/img/bg-hero.jpg';
+  const banner = event?.banner_path || 'banners/dultimahora-evento-placeholder.png';
 
   return (
     <main className="min-h-screen">
