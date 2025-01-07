@@ -1,4 +1,3 @@
-import { Header } from "@/components/header";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -17,7 +16,6 @@ export default function RootLayout({
       <body
         className={` antialiased bg-[#ededed]` }
       >
-        <Header/>
         {children}
       </body>
     </html>

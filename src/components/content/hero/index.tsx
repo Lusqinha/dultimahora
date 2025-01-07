@@ -1,22 +1,47 @@
-import { Button } from "@/components/ui/button";
-import { Header } from "@/components/header";
+import { ButtonImage } from '@/components/content/hero/buttonImage'
+import Image from "next/image"
+
+import '@/components/content/hero/styles.css';
 
 export function Hero() {
     return (
-        <section id="hero" className="h-svh w-full flex flex-col bg-[url('https://static.wixstatic.com/media/94e468_0cbb156733044d1480717571fdde3bbe~mv2.jpg/v1/fill/w_1280,h_345,al_c,q_85,enc_avif,quality_auto/94e468_0cbb156733044d1480717571fdde3bbe~mv2.jpg')] bg-no-repeat bg-cover bg-center ">
-            <Header/>
-            <div id="title" className="w-1/2 mx-auto text-center my-10 text-white">
-                <h3 className=" text-xl mb-2 font-bold">
-                    Para resolver seu rolê em
-                </h3>
-                <h2 className="text-7xl font-extrabold">
-                    Santa Maria
-                </h2>
+        <section className={styles['hero-section']}>
+            <div id="logo-header" className={styles['hero-logo-header']}>
+                <Image
+                    src="/img/dultimahora/logo.png"
+                    alt="Logo Dultimahora"
+                    width={150}
+                    height={150}
+                />
             </div>
-            <div id="cta-area" className=" mx-auto w-1/2 flex justify-center items-center gap-10">
-                <Button className="bg-[#fabf03] font-extrabold text-right text-4xl pr-12 rounded-2xl py-12 pl-28 max-w-[400px]">Encontrar<br/> Ingressos</Button>
-                <Button className="bg-[#fabf03] font-extrabold text-left text-4xl pl-12 rounded-2xl py-12 pr-28 max-w-[400px]">Revender <br/>meu Ingresso</Button>
-            </div>
+            <section className='h-full'>
+                <div id="hero-text" className={styles['hero-text']}>
+                    <p className={styles['hero-text-sm']}>Para resolver teu rolê em</p>
+                    <h2 className={styles['hero-text-lg']}>Santa Maria</h2 >
+                </div>
+                <div id="hero-cta" className={styles['hero-cta']}>
+                    <ButtonImage
+                        href="#"
+                        text="Encontrar ingressos"
+                        imageSrc="/img/dultimahora/d-compra-hero.png"
+                        leftImg
+                    />
+                    <ButtonImage
+                        href="#"
+                        text="Revender meu ingresso"
+                        imageSrc="/img/dultimahora/d-venda-hero.png"
+                    />
+                </div>
+            </section>
         </section>
     )
+}
+
+const styles = {
+    'hero-section': 'h-svh hero',
+    'hero-logo-header': 'w-full flex justify-center',
+    'hero-text': 'text-center text-white font-extrabold my-10',
+    'hero-text-sm': 'text-sm sm:text-xl',
+    'hero-text-lg': 'text-4xl sm:text-5xl',
+    'hero-cta': 'flex flex-col lg:flex-row items-center justify-between xl:w-2/3 lg:justify-evenly mx-auto',
 }

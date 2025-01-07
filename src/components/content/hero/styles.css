@@ -1,0 +1,8 @@
+.hero{
+    background-image: url('../../../../public/img/dultimahora/hero-bg-2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    height: 70vh;
+}
