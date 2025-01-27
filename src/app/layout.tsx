@@ -1,3 +1,4 @@
+import { BottomNav } from "@/components/bottom-nav";
 import { Header } from "@/components/header";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -18,7 +19,10 @@ export default function RootLayout({
         className={` antialiased bg-[#ededed]` }
       >
         <Header/>
-        {children}
+          <main className="pb-12 md:pb-0">
+            {children}
+          </main>
+        <BottomNav/>
       </body>
     </html>
   );
