@@ -1,6 +1,7 @@
 "use client";
 
 import { Evento as PrismaEvento, Ingresso } from "@prisma/client";
+import { formatDateString } from "@/lib/utils";
 import { Mic2Icon, CalendarDaysIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,7 +53,7 @@ export default function EventPage() {
                   <Mic2Icon className="text-[#3F7EA7]" />{event.nome}
                 </h2>
                 <h2 className="text-2xl text-center mx-14 mb-2 p-2 rounded-full flex justify-center bg-[#224b67] shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] items-center gap-2 font-extrabold text-[#FBC004]">
-                  <CalendarDaysIcon className="text-[#3F7EA7]" />{new Date(event.date).toLocaleDateString("pt-BR")}
+                  <CalendarDaysIcon className="text-[#3F7EA7]" />{formatDateString(event.date)}
                 </h2>
               </div>
            

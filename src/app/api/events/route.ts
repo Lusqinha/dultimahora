@@ -18,15 +18,15 @@ const uploadImageToMinio = async (file: File) => {
   
   // Configurar o upload para o MinIO
   const params = {
-    Bucket: 'dultimahora-banners',  // Substitua pelo nome do seu bucket
-    Key: random_name,  // Nome do arquivo (com nome aleatório)
-    Body: Buffer.from(data_file),  // Conteúdo do arquivo
-    ACL: 'public-read',  // Permitir leitura pública
+    Bucket: 'dultimahora-banners',
+    Key: random_name,
+    Body: Buffer.from(data_file),
+    ACL: 'public-read',
   };
 
   try {
     const data = await s3.upload(params).promise();
-    return data.Location;  // Retorna o link público da imagem
+    return data.Location;
   } catch (error) {
     console.error('Erro ao fazer upload:', error);
     throw new Error('Erro ao fazer upload da imagem');
@@ -41,6 +41,13 @@ export async function GET() {
       date: true,
       local: true,
       banner_path: true,
+      ingressos: true,
+      _count: {
+        select: { ingressos: true }
+      }
+    },
+    orderBy: {
+      date: 'asc',
     }
   });
 
@@ -65,11 +72,13 @@ export async function POST(req: NextResponse) {
     }
   }
 
+  console.log("data:", formData.get("date"));
+
   const evento = await prisma.evento.create({
     data: {
       nome: formData.get("nome") as string,
       date: new Date(formData.get("date") as string),
-      banner_path: file_path,  // Link do banner armazenado no MinIO
+      banner_path: file_path,
     }
   });
 
