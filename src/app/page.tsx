@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-[url('/img/bg-hero.jpg')] bg-no-repeat bg-center bg-cover">
+      <section className="relative bg-[url('/img/bg-hero.jpg')] bg-no-repeat bg-center bg-cover">
 
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pb-32">
 
@@ -39,7 +39,7 @@ export default function HomePage() {
                 Encontrar ingressos
               </ActionButton>
             </Link>
-            <Link href="/resale">
+            <Link href="/revender">
               <ActionButton className="w-full md:w-auto text-white font-extrabold"
                 icon={<Ticket className="w-6 h-6" />}
               >
