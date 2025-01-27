@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body
-        className={` antialiased bg-[#ededed]` }
+        className={` antialiased bg-white overflow-x-hidden` }
       >
           <main className="pb-12 md:pb-0">
             {children}
