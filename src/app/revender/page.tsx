@@ -5,11 +5,10 @@ import { redirect } from "next/navigation"
 import { useState } from "react"
 
 import { ResaleForm } from "@/components/resale-form"
-import {Button} from "@/components/ui/button"
-
+import { Button } from "@/components/ui/button"
 
 export default function ResalePage() {
-  const [hasEvent, setHasEvent] = useState<boolean>(false)
+  //const [hasEvent, setHasEvent] = useState<boolean>(false)
 
   return (
     <main className="min-h-screen">
@@ -33,33 +32,7 @@ export default function ResalePage() {
           </div>
         </div>
 
-        <div className="flex gap-4 my-5">
-          <Button
-            className="w-full bg-[#2b5d7f] text-white hover:bg-[#2b5d7f]/90"
-            onClick={() => redirect("/evento/cadastrar")}
-          >
-            Cadastrar Evento
-          </Button>
-          <Button
-            className="w-full bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
-            onClick={() => setHasEvent(true)}
-          >
-            Já tenho evento
-          </Button>
-        </div>
-        
-        {
-          hasEvent && (
-            <div>
-              <h1 className="text-2xl font-bold text-center text-[#2b5d7f] mb-8">
-                Preencha os campos abaixo para
-                <br />
-                anunciar seu ingresso!
-              </h1>
-              <ResaleForm />
-            </div>
-          )
-        }
+        <ResaleForm />
       </div>
     </main>
   )
