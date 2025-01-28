@@ -7,22 +7,39 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search } from "lucide-react"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form"
 import { api } from "@/lib/api"
 import { Steps } from "@/components/ui/steps"
-import { Card, CardContent } from "@/components/ui/card"
 import { smallDateString } from "@/lib/utils"
+
+import { EventSearch } from "./step-form/event-search"
+import { EventCreationForm } from "@/components/step-form/event-creation-form"
+import { PersonalInfoForm } from "@/components/step-form/personal-info-form"
+import { TicketFormatPriceForm } from "@/components/step-form/ticket-form"
 
 const formSchema = z.object({
   eventSearch: z.string().optional(),
   selectedEvent: z.string().optional(),
+  name: z
+    .string()
+    .min(2, {
+      message: "Nome do evento deve ter pelo menos 2 caracteres.",
+    })
+    .optional(),
+  date: z
+    .string()
+    .min(1, {
+      message: "Data do evento é obrigatória.",
+    })
+    .optional(),
+  link: z.string().url().optional().or(z.literal("")),
+  banner: z.any().optional().refine(
+          (file) => !file || file instanceof File,
+          { message: "O banner deve ser um arquivo válido." }
+      ),
   fullName: z.string().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres.",
   }),
@@ -48,9 +65,9 @@ const formSchema = z.object({
 
 const steps = [
   { title: "Buscar Evento", fields: ["eventSearch", "selectedEvent"] },
-  { title: "Detalhes do Evento", fields: ["ticketCount", "ticketType"] },
+  { title: "Criar Evento", fields: ["eventName", "eventDate", "eventLocation"] },
   { title: "Dados Pessoais", fields: ["fullName", "cpf", "whatsapp"] },
-  { title: "Informações do Ingresso", fields: ["format", "price"] },
+  { title: "Informações do Ingresso", fields: ["format", "price", "ticketCount", "ticketType"] },
 ]
 
 export function ResaleForm() {
@@ -59,6 +76,7 @@ export function ResaleForm() {
   const [events, setEvents] = useState<Evento[]>([])
   const [searchResults, setSearchResults] = useState<Evento[]>([])
   const [selectedEvent, setSelectedEvent] = useState<Evento | null>(null)
+  const [isCreatingEvent, setIsCreatingEvent] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -87,8 +105,60 @@ export function ResaleForm() {
     setSearchResults(results)
   }
 
+  async function createEvent(values: z.infer<typeof formSchema>) {
+    try {
+      const formData = new FormData()
+      if (values.name) formData.append("nome", values.name)
+      if (values.date) formData.append("date", values.date)
+      if (values.banner) formData.append("banner", values.banner as File)
+      if (values.link) formData.append("evento_weblink", values.link || "")
+
+      const response = await api.post("events", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+
+      if (response.status === 201) {
+        setSelectedEvent(response.data)
+        toast.success("Evento criado com sucesso!")
+        setIsCreatingEvent(false)
+        setCurrentStep(2) // Move to ticket details step
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error("Erro ao criar evento. Tente novamente.")
+    }
+  
+  }
+
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      if (isCreatingEvent) {
+        // Create new event
+        const formData = new FormData()
+        if (values.name) formData.append("nome", values.name)
+        if (values.date) formData.append("date", values.date)
+        if (values.banner) formData.append("banner", values.banner as File)
+        if (values.link) formData.append("evento_weblink", values.link || "")
+        
+        const eventResponse = await api.post("events", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+
+        if (eventResponse.status === 201) {
+          setSelectedEvent(eventResponse.data)
+          toast.success("Evento criado com sucesso!")
+          setIsCreatingEvent(false)
+          setCurrentStep(2) // Move to ticket details step
+          return
+        }
+      }
+
+      // Create ticket listing
       const response = await api.post("tickets", {
         nome_completo: values.fullName,
         tipo_ingresso: values.ticketType,
@@ -106,7 +176,7 @@ export function ResaleForm() {
       }
     } catch (error) {
       console.error(error)
-      toast.error("Erro ao anunciar ingresso. Tente novamente.")
+      toast.error("Erro ao processar sua solicitação. Tente novamente.")
     }
   }
 
@@ -114,12 +184,27 @@ export function ResaleForm() {
     const fields = steps[currentStep].fields
     const isValid = await form.trigger(fields as any)
     if (isValid) {
-      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
+      if (currentStep === 0 && !selectedEvent) {
+        setIsCreatingEvent(true)
+        setCurrentStep(1) // Move to event creation step
+      } else {
+        setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
+      }
+    }
+
+    if (currentStep === 1 && isCreatingEvent) {
+      setIsCreatingEvent(false)
+      createEvent(form.getValues())
     }
   }
 
   const handlePrevious = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0))
+    if (currentStep === 1 && isCreatingEvent) {
+      setIsCreatingEvent(false)
+      setCurrentStep(0)
+    } else {
+      setCurrentStep((prev) => Math.max(prev - 1, 0))
+    }
   }
 
   const isLastStep = currentStep === steps.length - 1
@@ -151,247 +236,46 @@ export function ResaleForm() {
               transition={{ duration: 0.2 }}
             >
               {currentStep === 0 && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-xl font-semibold mb-6">Informações do evento</h2>
-                    <FormField
-                      control={form.control}
-                      name="eventSearch"
-                      render={({ field }) => (
-                        <FormItem className="space-y-4">
-                          <FormLabel>Nome do evento</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Search className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                              <Input
-                                {...field}
-                                placeholder="Busque pelo nome do evento"
-                                className="pl-10"
-                                onChange={(e) => {
-                                  field.onChange(e)
-                                  searchEvents(e.target.value)
-                                }}
-                              />
-                            </div>
-                          </FormControl>
-                          {searchResults.length > 0 && (
-                            <div className="mt-2 rounded-lg border bg-card text-card-foreground shadow-sm">
-                              <div className="p-2">
-                                <p className="px-2 py-1.5 text-sm text-muted-foreground">
-                                  Resultados:
-                                </p>
-                                <div className="space-y-1">
-                                  {searchResults.map((event) => (
-                                    <div
-                                      key={event.id}
-                                      className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-accent cursor-pointer"
-                                      onClick={() => {
-                                        form.setValue('selectedEvent', event.id.toString())
-                                        setSelectedEvent(event)
-                                      }}
-                                    >
-                                      <input
-                                        type="radio"
-                                        className="h-4 w-4 rounded-full border-primary text-primary"
-                                        checked={selectedEvent?.id === event.id}
-                                        onChange={() => { }}
-                                      />
-                                      <div className="flex items-center gap-3">
-                                        <div className="h-10 w-10 overflow-hidden rounded-md">
-                                          <img
-                                            src={event.banner_path || '/placeholder.svg?height=40&width=40'}
-                                            alt={event.nome}
-                                            className="h-full w-full object-cover"
-                                          />
-                                        </div>
-                                        <span className="text-sm font-medium">
-                                          {event.nome}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
+                <EventSearch
+                  searchEvents={searchEvents}
+                  searchResults={searchResults}
+                  selectedEvent={selectedEvent}
+                  setSelectedEvent={setSelectedEvent}
+                  setIsCreatingEvent={setIsCreatingEvent}
+                  setCurrentStep={setCurrentStep}
+                  form={form}
+                />
               )}
 
               {currentStep === 1 && (
-                <>
-                  {selectedEvent ? (
+                <div className="space-y-6">
+                  {isCreatingEvent ? (
+                    <EventCreationForm form={form} />
+                  ) : (
                     <div className="space-y-4">
-                      <h3 className="font-bold">Evento Selecionado: {selectedEvent.nome}</h3>
-                      <p>Data: {smallDateString(selectedEvent.date)}</p>
-                      <p>Local: {selectedEvent.local}</p>
-                      <Button type="button" onClick={() => setSelectedEvent(null)}>
+                      <h3 className="font-bold">Evento Selecionado: {selectedEvent?.nome}</h3>
+                      <p>
+                        Data:{" "}
+                        {selectedEvent?.date ? smallDateString(new Date(selectedEvent.date)) : "Data não disponível"}
+                      </p>
+                      <p>Local: {selectedEvent?.local}</p>
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          setSelectedEvent(null)
+                          setCurrentStep(0)
+                        }}
+                      >
                         Alterar Evento
                       </Button>
                     </div>
-                  ) : (
-                    <Alert>
-                      <AlertTitle>Nenhum evento selecionado</AlertTitle>
-                      <AlertDescription>Por favor, volte ao passo anterior e selecione um evento.</AlertDescription>
-                    </Alert>
                   )}
-
-                  <FormField
-                    control={form.control}
-                    name="ticketCount"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Número de Ingressos *</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Quantidade" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {[1, 2, 3, 4, 5].map((num) => (
-                              <SelectItem key={num} value={num.toString()}>
-                                {num}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="ticketType"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Insira o Tipo de ingresso *</FormLabel>
-                        <FormControl>
-                          <Input placeholder="(camarote, pista etc...)" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
+                </div>
               )}
 
-              {currentStep === 2 && (
-                <>
-                  <FormField
-                    control={form.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nome Completo *</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              {currentStep === 2 && <PersonalInfoForm form={form} formatCPF={formatCPF} formatPhone={formatPhone} />}
 
-                  <FormField
-                    control={form.control}
-                    name="cpf"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>CPF *</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            onChange={(e) => {
-                              const formatted = formatCPF(e.target.value)
-                              e.target.value = formatted
-                              field.onChange(formatted.replace(/\D/g, ""))
-                            }}
-                            maxLength={14}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="whatsapp"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Numero do seu Whatsapp *</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="(99) 99999-9999"
-                            {...field}
-                            onChange={(e) => {
-                              const formatted = formatPhone(e.target.value)
-                              e.target.value = formatted
-                              field.onChange(formatted.replace(/\D/g, ""))
-                            }}
-                            maxLength={15}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
-
-              {currentStep === 3 && (
-                <>
-                  <FormField
-                    control={form.control}
-                    name="format"
-                    render={({ field }) => (
-                      <FormItem className="space-y-3">
-                        <FormLabel>Formato do ingresso: *</FormLabel>
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="flex flex-col space-y-1"
-                          >
-                            <FormItem className="flex items-center space-x-3 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="Digital" />
-                              </FormControl>
-                              <FormLabel className="font-normal">Digital</FormLabel>
-                            </FormItem>
-                            <FormItem className="flex items-center space-x-3 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="Físico" />
-                              </FormControl>
-                              <FormLabel className="font-normal">Físico</FormLabel>
-                            </FormItem>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="price"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Valor que quer vender(cada) *</FormLabel>
-                        <FormControl>
-                          <Input type="number" min="0" step="0.10" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
+              {currentStep === 3 && <TicketFormatPriceForm form={form} />}
             </motion.div>
           </AnimatePresence>
 
@@ -402,7 +286,11 @@ export function ResaleForm() {
               </Button>
             )}
             {!isLastStep ? (
-              <Button type="button" className="ml-auto" onClick={handleNext}>
+              <Button
+                type="button"
+                className="ml-auto bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
+                onClick={handleNext}
+              >
                 Próximo
               </Button>
             ) : (
