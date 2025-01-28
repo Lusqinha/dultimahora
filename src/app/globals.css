@@ -9,11 +9,6 @@ body {
   font-weight: 600;
 }
 
-.highlight-boxshadow {
--webkit-box-shadow: 0 4px 32px -7.5px #2248ff;
-  -moz-box-shadow: 0 4px 32px -7.5px #2248ff;
-  box-shadow: 0 4px 32px -7.5px #2248ff;
-}
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -16,11 +16,9 @@ import { CalendarDaysIcon } from "lucide-react"
 
 
 export default function EventCard({ id, nome, date, banner_path, _count }: Evento) {
-
-  const highlightClass = _count.ingressos > 3 ? 'highlight-boxshadow' : '';
   return (
     <Link href={`/evento/${id}`}>
-      <Card className={`overflow-hidden bg-white hover:shadow-lg transition-shadow mx-auto ${highlightClass}`}>
+      <Card className={`overflow-hidden bg-white hover:shadow-lg transition-shadow mx-auto min-h-max`}>
         <CardContent className="p-0">
           <div className="relative">
             <img 
