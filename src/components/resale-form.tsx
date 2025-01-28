@@ -338,7 +338,7 @@ export function ResaleForm() {
             <Button
               onClick={() => {
                 setShowSuccessModal(false)
-                redirect(`/eventos/${selectedEvent?.id}`)
+                redirect(`/evento/${selectedEvent?.id}`)
               }}
             >
               Ir para o evento
