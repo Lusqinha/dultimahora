@@ -43,11 +43,13 @@ export async function GET() {
       banner_path: true,
       ingressos: true,
       _count: {
-        select: { ingressos: true }
+        select: { ingressos: true },
       }
     },
     orderBy: {
-      date: 'asc',
+      ingressos: {
+        _count: 'desc',
+      }
     }
   });
 
