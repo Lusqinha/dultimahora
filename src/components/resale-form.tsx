@@ -7,6 +7,15 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 import { motion, AnimatePresence } from "framer-motion"
+import { Loader2 } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
@@ -19,6 +28,7 @@ import { EventSearch } from "./step-form/event-search"
 import { EventCreationForm } from "@/components/step-form/event-creation-form"
 import { PersonalInfoForm } from "@/components/step-form/personal-info-form"
 import { TicketFormatPriceForm } from "@/components/step-form/ticket-form"
+import { redirect } from "next/navigation"
 
 const formSchema = z.object({
   eventSearch: z.string().optional(),
@@ -36,10 +46,10 @@ const formSchema = z.object({
     })
     .optional(),
   link: z.string().url().optional().or(z.literal("")),
-  banner: z.any().optional().refine(
-          (file) => !file || file instanceof File,
-          { message: "O banner deve ser um arquivo válido." }
-      ),
+  banner: z
+    .any()
+    .optional()
+    .refine((file) => !file || file instanceof File, { message: "O banner deve ser um arquivo válido." }),
   fullName: z.string().min(2, {
     message: "Nome deve ter pelo menos 2 caracteres.",
   }),
@@ -77,6 +87,8 @@ export function ResaleForm() {
   const [searchResults, setSearchResults] = useState<Evento[]>([])
   const [selectedEvent, setSelectedEvent] = useState<Evento | null>(null)
   const [isCreatingEvent, setIsCreatingEvent] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -129,11 +141,10 @@ export function ResaleForm() {
       console.error(error)
       toast.error("Erro ao criar evento. Tente novamente.")
     }
-  
   }
 
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true)
     try {
       if (isCreatingEvent) {
         // Create new event
@@ -142,7 +153,7 @@ export function ResaleForm() {
         if (values.date) formData.append("date", values.date)
         if (values.banner) formData.append("banner", values.banner as File)
         if (values.link) formData.append("evento_weblink", values.link || "")
-        
+
         const eventResponse = await api.post("events", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -172,11 +183,13 @@ export function ResaleForm() {
 
       if (response.status === 201) {
         setPassword(response.data.codigo_ingresso)
-        toast.success("Ingresso anunciado com sucesso!")
+        setShowSuccessModal(true)
       }
     } catch (error) {
       console.error(error)
       toast.error("Erro ao processar sua solicitação. Tente novamente.")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -184,17 +197,19 @@ export function ResaleForm() {
     const fields = steps[currentStep].fields
     const isValid = await form.trigger(fields as any)
     if (isValid) {
+      setIsLoading(true)
       if (currentStep === 0 && !selectedEvent) {
         setIsCreatingEvent(true)
         setCurrentStep(1) // Move to event creation step
       } else {
         setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
       }
-    }
 
-    if (currentStep === 1 && isCreatingEvent) {
-      setIsCreatingEvent(false)
-      createEvent(form.getValues())
+      if (currentStep === 1 && isCreatingEvent) {
+        setIsCreatingEvent(false)
+        await createEvent(form.getValues())
+      }
+      setIsLoading(false)
     }
   }
 
@@ -290,11 +305,18 @@ export function ResaleForm() {
                 type="button"
                 className="ml-auto bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
                 onClick={handleNext}
+                disabled={isLoading}
               >
+                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Próximo
               </Button>
             ) : (
-              <Button type="submit" className="ml-auto bg-[#FBC004] text-black hover:bg-[#FBC004]/90">
+              <Button
+                type="submit"
+                className="ml-auto bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Anunciar Ingresso
               </Button>
             )}
@@ -302,16 +324,28 @@ export function ResaleForm() {
         </form>
       </Form>
 
-      {password && (
-        <Alert className="mt-6 border border-green-500">
-          <AlertTitle>Anúncio criado com sucesso!</AlertTitle>
-          <AlertDescription>
-            Sua senha para editar este anúncio é: <strong>{password}</strong>
-            <br />
-            Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro.
-          </AlertDescription>
-        </Alert>
-      )}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Anúncio criado com sucesso!</DialogTitle>
+            <DialogDescription>
+              Sua senha para editar este anúncio é: <strong>{password}</strong>
+              <br />
+              Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              onClick={() => {
+                setShowSuccessModal(false)
+                redirect(`/eventos/${selectedEvent?.id}`)
+              }}
+            >
+              Ir para o evento
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
