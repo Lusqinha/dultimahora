@@ -9,4 +9,10 @@ const nextConfig: NextConfig = {
   }
 };
 
+module.exports = {
+  images: {
+    domains: ['startups-minio.x2vfeh.easypanel.host'],
+  },
+};
+
 export default nextConfig;
