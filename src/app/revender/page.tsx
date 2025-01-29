@@ -1,11 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { redirect } from "next/navigation"
-import { useState } from "react"
 
 import { ResaleForm } from "@/components/resale-form"
-import { Button } from "@/components/ui/button"
 
 export default function ResalePage() {
   //const [hasEvent, setHasEvent] = useState<boolean>(false)

@@ -2,7 +2,7 @@
 
 import type { Evento as PrismaEvento, Ingresso } from "@prisma/client"
 import { formatDateString } from "@/lib/utils"
-import { Mic2Icon, CalendarDaysIcon, MapPinIcon, TicketIcon, ChevronDownIcon, DollarSignIcon } from "lucide-react"
+import { CalendarDaysIcon, TicketIcon, ChevronDownIcon, DollarSignIcon } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Image from "next/image"

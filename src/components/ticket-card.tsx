@@ -33,7 +33,7 @@ export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso,
           </div>
           <div className="mt-4 pt-4 border-t self-end border-gray-200">
             <button className="w-full bg-[#FFC006] text-white py-2 px-4 rounded-lg hover:bg-[#bf9d38] transition-colors duration-300">
-              Ver D'etalhes
+              {`Ver D'etalhes`}
             </button>
           </div>
         </CardContent>
