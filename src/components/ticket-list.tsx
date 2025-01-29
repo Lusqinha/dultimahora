@@ -15,7 +15,7 @@ export function TicketList({ tickets }: TicketListProps) {
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid flex-wrap grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3">
       {tickets.map((ticket) => (
         <TicketCard key={ticket.id} {...ticket} />
       ))}
