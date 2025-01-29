@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import AWS from 'aws-sdk';
 
 import prisma from "@/lib/db";
@@ -56,7 +56,7 @@ export async function GET() {
   return NextResponse.json(events);
 }
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   const formData = await req.formData();
   console.log("Payload recebido:", formData);
 
