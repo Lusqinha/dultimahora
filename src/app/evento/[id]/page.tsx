@@ -42,16 +42,13 @@ export default function EventPage() {
         <>
           <div className="relative w-full h-64 sm:h-80 md:h-96">
             <Image src={banner || "/placeholder.svg"} alt={event.nome} layout="fill" objectFit="cover" priority />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end justify-start p-4 sm:p-6">
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-start p-4 sm:p-6 flex-col justify-end">
               <h1 className="text-2xl text-center sm:text-3xl md:text-4xl font-bold text-white">{event.nome}</h1>
+              <h1 className="text-lg text-center sm:text-xl md:text-2xl font-bold text-white flex gap-2"><CalendarDaysIcon/>{formatDateString(event.date)}</h1>
             </div>
           </div>
 
           <div className="px-4 py-6 space-y-6">
-            <div className="flex flex-col space-y-4">
-              <EventInfoCard icon={CalendarDaysIcon} title="Data" content={formatDateString(event.date)} />
-            </div>
-
             <div className="bg-gray-100 rounded-lg p-4">
               <button
                 onClick={() => setShowDetails(!showDetails)}
@@ -59,20 +56,21 @@ export default function EventPage() {
               >
                 <h2 className="text-xl font-bold text-[#2248FF]">Sobre o Evento</h2>
                 <ChevronDownIcon
-                  className={`text-[#2248FF] transition-transform ${showDetails ? "transform rotate-180" : ""}`}
+                  className={`text-[#FFC006] transition-transform ${showDetails ? "transform rotate-180" : ""}`}
                 />
               </button>
               {showDetails && (
-                <p className="mt-4 text-gray-700">
-                  {event.evento_weblink?.toString() || "Informações sobre o evento em breve."}
+                <p className="mt-4">
+                  <EventInfoCard icon={CalendarDaysIcon} title="Data" content={formatDateString(event.date)} />
                 </p>
+                
               )}
             </div>
 
             <AdBanner />
 
             <div>
-              <h2 className="text-xl font-bold text-[#2248FF] mb-4 flex items-center">
+              <h2 className="text-2xl font-bold text-[#2248FF] mb-4 flex text-center justify-center items-center">
                 <TicketIcon className="mr-2" />
                 Ingressos Disponíveis
               </h2>
@@ -85,13 +83,12 @@ export default function EventPage() {
   )
 }
 
-function EventInfoCard({ icon: Icon, title, content }: { icon: React.ElementType; title: string; content: string }) {
+function EventInfoCard({ icon: Icon, content }: { icon: React.ElementType; title: string; content: string }) {
   return (
-    <div className="flex items-center bg-[#ffc106] rounded-lg p-4 shadow-md">
-      <Icon className="text-[#2248FF] w-9 h-9 mr-3" />
+    <div className="flex items-center">
+      <Icon className="text-[#2248FF] w-5 h-5 mr-2" />
       <div>
-        <h3 className="text-sm font-semibold text-[#2248FF]">{title}</h3>
-        <p className="text-white text-lg">{content}</p>
+        <p className="text-[#FFC006]">{content}</p>
       </div>
     </div>
   )
@@ -110,11 +107,11 @@ function AdBanner() {
   }
 
   return (
-    <div className="bg-gradient-to-r from-[#2248FF] to-[#FFC006] rounded-lg p-6 text-center shadow-lg">
+    <div className="bg-[#FFC006] rounded-lg px-4 py-3 text-center shadow-lg">
       <DollarSignIcon className="w-12 h-12 mx-auto mb-4 text-white" />
-      <h3 className="text-xl font-bold text-white mb-2">Espaço Publicitário Disponível</h3>
-      <p className="text-white mb-4">Alcance seu público-alvo neste evento!</p>
-      <button className="bg-white text-[#2248FF] font-bold py-2 px-4 rounded hover:bg-opacity-90 transition duration-300">
+      <h3 className="text-lg lg:text-xl font-bold text-white mb-2">Espaço Publicitário Disponível</h3>
+      <p className="text-white text-xs lg:text-lg mb-4">Alcance seu público-alvo neste evento!</p>
+      <button className="bg-white text-[#FFC006] text-md font-bold py-2 px-4 rounded hover:bg-opacity-90 transition duration-300">
         Comprar Espaço
       </button>
     </div>
