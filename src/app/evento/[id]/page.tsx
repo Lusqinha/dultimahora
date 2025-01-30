@@ -5,6 +5,7 @@ import { formatDateString } from "@/lib/utils"
 import { CalendarDaysIcon, TicketIcon, ChevronDownIcon, DollarSignIcon } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
+import { BackArrow } from "@/components/back-arrow"
 import Image from "next/image"
 import type React from "react"
 
@@ -38,6 +39,7 @@ export default function EventPage() {
 
   return (
     <div className="min-h-screen bg-white lg:w-2/3 mx-auto">
+      <BackArrow />
       {event && (
         <>
           <div className="relative w-full h-64 sm:h-80 md:h-96">

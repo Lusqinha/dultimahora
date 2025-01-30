@@ -5,6 +5,7 @@ import { api } from "@/lib/api"
 import { useState, useEffect } from "react"
 import type { Ingresso } from "@prisma/client"
 import { AlertTriangle, Ticket, DollarSign, User, MessageCircle } from "lucide-react"
+import { BackArrow } from "@/components/back-arrow"
 
 interface TicketDetailsType extends Ingresso {
   evento: {
@@ -45,6 +46,7 @@ export default function TicketDetailsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 py-8 px-4">
+      <BackArrow />
       <div className="max-w-2xl mx-auto space-y-8">
         {/* Ad Banner */}
         <div className="bg-[#FFC006] rounded-lg p-6 text-center shadow-lg">

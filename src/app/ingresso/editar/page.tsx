@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 "use client"
 
 import { EditTicketForm } from "@/components/edit-ticket-form"
@@ -18,8 +20,9 @@ import type { Ingresso } from "@prisma/client"
 import { useState } from "react"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
-import { Loader2, Trash2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { BackArrow } from "@/components/back-arrow"
 import type React from "react" // Added import for React
 
 export default function EditTicketPage() {
@@ -29,7 +32,6 @@ export default function EditTicketPage() {
   const [cpf, setCpf] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
   const router = useRouter()
 
@@ -74,20 +76,10 @@ export default function EditTicketPage() {
     }
   }
 
-  const handleDelete = async () => {
-    try {
-      await api.delete(`tickets/${ticketDetails?.id}`)
-      toast.success("Ingresso deletado com sucesso!")
-      router.push("/") // Redirect to home page after deletion
-    } catch (err) {
-      console.error(err)
-      toast.error("Erro ao deletar o ingresso. Tente novamente.")
-    }
-  }
-
   if (isAuthenticated) {
     return (
       <main className="min-h-screen py-8 px-4">
+        <BackArrow />
         <Card className="max-w-xl mx-auto shadow-md">
           <CardHeader className="bg-[#FFC006] rounded-t-md text-white">
             <CardTitle className="text-2xl font-bold text-center">Editar Anúncio</CardTitle>
@@ -131,6 +123,7 @@ export default function EditTicketPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <BackArrow />
       <Card className="w-full max-w-md shadow-md rounded-md ">
         <CardHeader className="bg-[#FFC006] text-white rounded-t-md">
           <CardTitle className="text-2xl font-bold text-center">Acesso ao Anúncio</CardTitle>
