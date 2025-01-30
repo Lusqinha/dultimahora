@@ -31,7 +31,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   return NextResponse.json(ingresso, { status: 200 });
 }
 
-export async function PATCH(
+export async function PUT(
   req: NextRequest,
   { params }: { params:Promise<{id:string}> },
 ) {
