@@ -12,7 +12,7 @@ interface ButtonImageProps {
 export function ButtonImage({ href, text, imageSrc, leftImg }: ButtonImageProps) {
 
     const btn_img_cn = leftImg ? "absolute -left-1 -bottom-1" : "absolute -right-1 bottom-0"
-    const btn_txt_cn = leftImg ? "w-full ml-8 text-4xl text-right" : "w-full text-4xl text-left"
+    const btn_txt_cn = leftImg ? "w-full ml-8 text-4xl text-right" : "w-full text-4xl text-left pr-4"
 
     return (
         <Link
