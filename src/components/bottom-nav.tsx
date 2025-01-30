@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Plus, Calendar } from "lucide-react"
+import { Home, Plus, Calendar, Ticket } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -10,6 +10,16 @@ export function BottomNav() {
 
     return (
         <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t rounded-t-3xl h-16 flex items-center justify-around">
+            <Link
+                href="/ingresso/editar"
+                className={cn(
+                    "flex flex-col items-center justify-center text-xs",
+                    pathname === "/ingresso/editar" ? "text-blue-600" : "text-gray-500",
+                )}
+            >
+                <Ticket className="h-5 w-5" />
+                <span>Meu ingresso</span>
+            </Link>
             <Link
                 href="/"
                 className={cn(
@@ -38,7 +48,7 @@ export function BottomNav() {
                 )}
             >
                 <Plus className="h-5 w-5" />
-                <span>Registrar</span>
+                <span>Revender</span>
             </Link>
         </nav>
     )
