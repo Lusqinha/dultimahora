@@ -30,6 +30,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
                         qtd_ingressos: true,
                         valor_un: true,
                     },
+                    orderBy: { valor_un: "asc" },
                 },
             },
         });
