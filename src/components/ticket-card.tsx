@@ -4,7 +4,7 @@ import Image from "next/image"
 import type { Ingresso } from "@prisma/client"
 import { User2 } from "lucide-react"
 
-export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso, nome_completo, valor_un }: Ingresso) {
+export function TicketCard({ id, qtd_ingressos, tipo_ingresso, nome_completo, valor_un }: Ingresso) {
   const nome_completo_formatado = nome_completo.split(' ')[0].split('', 9).reduce((o, c) => o.length === 8 ? `${o}${c}...` : `${o}${c}`, '')
   return (
     <Link href={`/ingresso/${id}`}>
