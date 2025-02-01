@@ -2,12 +2,13 @@
 
 import type { Evento as PrismaEvento, Ingresso } from "@prisma/client"
 import { formatDateString } from "@/lib/utils"
-import { CalendarDaysIcon, TicketIcon, ChevronDownIcon, DollarSignIcon } from "lucide-react"
+import { CalendarDaysIcon, TicketIcon, ChevronDownIcon } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { BackArrow } from "@/components/back-arrow"
 import Image from "next/image"
 import type React from "react"
+import { AdBanner } from "@/components/ad-banner"
 
 import { TicketList } from "@/components/ticket-list"
 import { api } from "@/lib/api"
@@ -92,30 +93,6 @@ function EventInfoCard({ icon: Icon, content }: { icon: React.ElementType; title
       <div>
         <p className="text-[#FFC006]">{content}</p>
       </div>
-    </div>
-  )
-}
-
-function AdBanner() {
-  // Aqui você pode adicionar lógica para verificar se há um banner específico para exibir
-  const hasCustomBanner = false // Substitua isso pela sua lógica real
-
-  if (hasCustomBanner) {
-    return (
-      <div className="bg-gray-200 rounded-lg p-4 text-center">
-        <p className="text-gray-500">Banner de anúncio personalizado</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-[#FFC006] rounded-lg px-4 py-3 text-center shadow-lg">
-      <DollarSignIcon className="w-12 h-12 mx-auto mb-4 text-white" />
-      <h3 className="text-lg lg:text-xl font-bold text-white mb-2">Espaço Publicitário Disponível</h3>
-      <p className="text-white text-xs lg:text-lg mb-4">Alcance seu público-alvo neste evento!</p>
-      <button className="bg-white text-[#FFC006] text-md font-bold py-2 px-4 rounded hover:bg-opacity-90 transition duration-300">
-        Comprar Espaço
-      </button>
     </div>
   )
 }
