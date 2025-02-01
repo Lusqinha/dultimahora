@@ -28,7 +28,7 @@ export default function HomePage() {
 
       <section className="bg-white py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#2248FF] text-center mb-12">Eventos que estão bombando!</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2248FF] text-center mb-12">Eventos em D'estaque</h2>
           <div className="relative">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex">
