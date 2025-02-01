@@ -1,5 +1,6 @@
 import { BottomNav } from "@/components/bottom-nav";
 import { TermsBanner } from "@/components/term-banner";
+import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -21,7 +22,8 @@ export default function RootLayout({
           <main className="pb-12 md:pb-0">
             {children}
         </main>
-        <TermsBanner/>
+        <TermsBanner />
+        <Footer />
         <BottomNav/>
       </body>
     </html>

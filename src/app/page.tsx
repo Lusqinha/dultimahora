@@ -8,6 +8,9 @@ import { api } from "@/lib/api"
 import useEmblaCarousel from "embla-carousel-react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { AdBanner } from "@/components/ad-banner"
+import { AboutUs } from "@/components/about-us"
+import { ContactUs } from "@/components/contact-us"
 
 export default function HomePage() {
   const [events, setEvents] = useState<Evento[]>([])
@@ -25,8 +28,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden">
       <Hero />
-
-      <section className="bg-white py-16 px-4">
+      <section className="bg-white py-16 w-11/12 mx-auto">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#2248FF] text-center mb-12">{`Eventos em D'estaque`}</h2>
           <div className="relative">
@@ -66,6 +68,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <AdBanner className="w-11/12 mx-auto mb-10" />
+      <AboutUs />
+      <ContactUs className="w-11/12 mx-auto my-5"/>
     </main>
   )
 }
