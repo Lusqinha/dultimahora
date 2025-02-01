@@ -36,7 +36,7 @@ export function Footer() {
                         </div>
                     </div>
                     <div className="text-center md:text-right text-sm">
-                        <p>© 2024 por D'Ultimahora.</p>
+                        <p>{`© 2025 por D'Ultimahora.`}</p>
                         <p>Todos os direitos reservados.</p>
                     </div>
                 </div>

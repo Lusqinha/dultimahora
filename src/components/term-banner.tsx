@@ -25,10 +25,10 @@ export function TermsBanner() {
     <div className="fixed bottom-16 md:bottom-0 left-0 right-0 bg-[#2247fff5] text-white p-4 z-50">
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between">
         <p className="text-xs mb-4 md:mb-0 md:mr-4 text-justify px-2" style={{ textAlignLast: 'center'}}>
-          O D'Ultimahora é uma plataforma que une vendedores e compradores. 
+          {`O D'Ultimahora é uma plataforma que une vendedores e compradores. 
           Ao usar nossos serviços, você concorda em tomar precauções durante as negociações, 
           como escolher locais públicos para encontros e verificar a autenticidade das ofertas. 
-          A plataforma não se responsabiliza por transações entre usuários.
+          A plataforma não se responsabiliza por transações entre usuários.`}
         </p>
         <div className="flex items-center">
           <Button 
