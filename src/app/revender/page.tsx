@@ -5,12 +5,11 @@ import Image from "next/image"
 import { ResaleForm } from "@/components/resale-form"
 
 export default function ResalePage() {
-  //const [hasEvent, setHasEvent] = useState<boolean>(false)
-
   return (
     <main className="min-h-screen">
       <div className="max-w-xl mx-auto px-4 py-8">
         {/* Info Box */}
+          <ResaleForm />
         <div className="relative my-8">
           <Image
             src="/img/d-alerta.png"
@@ -29,7 +28,6 @@ export default function ResalePage() {
           </div>
         </div>
 
-        <ResaleForm />
       </div>
     </main>
   )

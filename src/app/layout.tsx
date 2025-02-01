@@ -3,6 +3,7 @@ import { TermsBanner } from "@/components/term-banner";
 import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
 import "./globals.css";
+import { DesktopNav } from "@/components/desktop-nav";
 
 export const metadata: Metadata = {
   title: "D'Ultima Hora",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body
         className={` antialiased bg-white overflow-x-hidden` }
       >
+        <DesktopNav />
           <main className="pb-12 md:pb-0">
             {children}
         </main>
