@@ -23,7 +23,7 @@ export default function HomePage() {
   const scrollNext = () => emblaApi && emblaApi.scrollNext()
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overflow-x-hidden">
       <Hero />
 
       <section className="bg-white py-16 px-4">
