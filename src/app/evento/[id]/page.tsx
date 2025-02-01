@@ -5,12 +5,12 @@ import { formatDateString } from "@/lib/utils"
 import { CalendarDaysIcon, TicketIcon } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { BackArrow } from "@/components/back-arrow"
+import { BackArrow } from "@/components/layout/back-arrow"
 import Image from "next/image"
 import type React from "react"
-import { AdBanner } from "@/components/ad-banner"
+import { AdBanner } from "@/components/home/ad-banner"
 
-import { TicketList } from "@/components/ticket-list"
+import { TicketList } from "@/components/ticket/ticket-list"
 import { api } from "@/lib/api"
 
 interface Evento extends PrismaEvento {

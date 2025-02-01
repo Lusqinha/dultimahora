@@ -26,9 +26,9 @@ import { Steps } from "@/components/ui/steps"
 import { smallDateString } from "@/lib/utils"
 
 import { EventSearch } from "./step-form/event-search"
-import { EventCreationForm } from "@/components/step-form/event-creation-form"
-import { PersonalInfoForm } from "@/components/step-form/personal-info-form"
-import { TicketFormatPriceForm } from "@/components/step-form/ticket-form"
+import { EventCreationForm } from "@/components/resale/step-form/event-creation-form"
+import { PersonalInfoForm } from "@/components/resale/step-form/personal-info-form"
+import { TicketFormatPriceForm } from "@/components/resale/step-form/ticket-form"
 import { redirect } from "next/navigation"
 
 const formSchema = z.object({

@@ -2,7 +2,7 @@
 
 "use client"
 
-import { EditTicketForm } from "@/components/edit-ticket-form"
+import { EditTicketForm } from "@/components/ticket/edit-ticket-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,7 +22,7 @@ import { api } from "@/lib/api"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { BackArrow } from "@/components/back-arrow"
+import { BackArrow } from "@/components/layout/back-arrow"
 import type React from "react" // Added import for React
 
 export default function EditTicketPage() {

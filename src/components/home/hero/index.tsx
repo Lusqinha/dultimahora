@@ -1,7 +1,7 @@
-import { ButtonImage } from '@/components/content/hero/buttonImage'
+import { ButtonImage } from '@/components/home/hero/buttonImage'
 import Image from "next/image"
 
-import '@/components/content/hero/styles.css';
+import '@/components/home/hero/styles.css';
 
 export function Hero() {
     return (

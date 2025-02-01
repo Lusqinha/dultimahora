@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 
-import { ResaleForm } from "@/components/resale-form"
+import { ResaleForm } from "@/components/resale/resale-form"
 
 export default function ResalePage() {
   return (

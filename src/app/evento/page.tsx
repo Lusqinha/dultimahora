@@ -5,7 +5,7 @@ import { useEffect, useState, useRef, useCallback } from "react"
 import type { Evento } from "@prisma/client"
 import { api } from "@/lib/api"
 import { Input } from "@/components/ui/input"
-import EventCard from "@/components/event-card"
+import EventCard from "@/components/event/event-card"
 
 const ITEMS_PER_PAGE = 12
 

@@ -5,7 +5,7 @@ import { api } from "@/lib/api"
 import { useState, useEffect } from "react"
 import type { Ingresso } from "@prisma/client"
 import { AlertTriangle, Ticket, DollarSign, User, MessageCircle } from "lucide-react"
-import { BackArrow } from "@/components/back-arrow"
+import { BackArrow } from "@/components/layout/back-arrow"
 
 interface TicketDetailsType extends Ingresso {
   evento: {

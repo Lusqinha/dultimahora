@@ -1,9 +1,9 @@
-import { BottomNav } from "@/components/bottom-nav";
-import { TermsBanner } from "@/components/term-banner";
+import { BottomNav } from "@/components/layout/bottom-nav";
+import { TermsBanner } from "@/components/layout/term-banner";
 import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
 import "./globals.css";
-import { DesktopNav } from "@/components/desktop-nav";
+import { DesktopNav } from "@/components/layout/desktop-nav";
 
 export const metadata: Metadata = {
   title: "D'Ultima Hora",

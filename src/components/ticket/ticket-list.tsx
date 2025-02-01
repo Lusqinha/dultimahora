@@ -1,4 +1,4 @@
-import { TicketCard } from "@/components/ticket-card"
+import { TicketCard } from "@/components/ticket/ticket-card"
 import { Ingresso } from "@prisma/client"
 
 interface TicketListProps {

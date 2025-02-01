@@ -1,16 +1,16 @@
 "use client"
 
-import { Hero } from "@/components/content/hero"
-import EventCard from "@/components/event-card"
+import { Hero } from "@/components/home/hero"
+import EventCard from "@/components/event/event-card"
 import type { Evento } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { api } from "@/lib/api"
 import useEmblaCarousel from "embla-carousel-react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { AdBanner } from "@/components/ad-banner"
-import { AboutUs } from "@/components/about-us"
-import { ContactUs } from "@/components/contact-us"
+import { AdBanner } from "@/components/home/ad-banner"
+import { AboutUs } from "@/components/home/about-us"
+import { ContactUs } from "@/components/home/contact-us"
 
 export default function HomePage() {
   const [events, setEvents] = useState<Evento[]>([])
