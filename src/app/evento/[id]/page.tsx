@@ -2,7 +2,7 @@
 
 import type { Evento as PrismaEvento, Ingresso } from "@prisma/client"
 import { formatDateString } from "@/lib/utils"
-import { CalendarDaysIcon, TicketIcon, ChevronDownIcon } from "lucide-react"
+import { CalendarDaysIcon, TicketIcon } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { BackArrow } from "@/components/back-arrow"
@@ -20,7 +20,6 @@ interface Evento extends PrismaEvento {
 export default function EventPage() {
   const params = useParams()
   const [event, setEvent] = useState<Evento | null>(null)
-  const [showDetails, setShowDetails] = useState(false)
   const event_id = params.id
 
   useEffect(() => {
@@ -52,24 +51,6 @@ export default function EventPage() {
           </div>
 
           <div className="px-4 py-6 space-y-6">
-            <div className="bg-gray-100 rounded-lg p-4">
-              <button
-                onClick={() => setShowDetails(!showDetails)}
-                className="flex justify-between items-center w-full text-left"
-              >
-                <h2 className="text-xl font-bold text-[#2248FF]">Sobre o Evento</h2>
-                <ChevronDownIcon
-                  className={`text-[#FFC006] transition-transform ${showDetails ? "transform rotate-180" : ""}`}
-                />
-              </button>
-              {showDetails && (
-                <p className="mt-4">
-                  <EventInfoCard icon={CalendarDaysIcon} title="Data" content={formatDateString(event.date)} />
-                </p>
-                
-              )}
-            </div>
-
             <AdBanner />
 
             <div>
@@ -82,17 +63,6 @@ export default function EventPage() {
           </div>
         </>
       )}
-    </div>
-  )
-}
-
-function EventInfoCard({ icon: Icon, content }: { icon: React.ElementType; title: string; content: string }) {
-  return (
-    <div className="flex items-center">
-      <Icon className="text-[#2248FF] w-5 h-5 mr-2" />
-      <div>
-        <p className="text-[#FFC006]">{content}</p>
-      </div>
     </div>
   )
 }

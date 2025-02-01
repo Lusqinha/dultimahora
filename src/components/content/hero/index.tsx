@@ -38,7 +38,7 @@ export function Hero() {
 }
 
 const styles = {
-    'hero-section': 'h-svh hero min-h-[602px]',
+    'hero-section': 'h-svh hero min-h-[650px]',
     'hero-logo-header': 'w-full flex py-4 justify-center',
     'hero-text': 'text-center text-white font-extrabold my-2',
     'hero-text-sm': 'text-xl',
