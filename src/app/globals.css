@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+    scroll-behavior: smooth;
+    background-color: #2248FF;
+}
 
 body {
   font-family: 'Poppins', serif;
