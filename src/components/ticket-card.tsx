@@ -4,7 +4,7 @@ import Image from "next/image"
 import type { Ingresso } from "@prisma/client"
 import { User2 } from "lucide-react"
 
-export function TicketCard({ id, qtd_ingressos, tipo_ingresso, nome_completo, valor_un }: Ingresso) {
+export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso, nome_completo, valor_un }: Ingresso) {
   const nome_completo_formatado = nome_completo.split(' ')[0].split('', 9).reduce((o, c) => o.length === 8 ? `${o}${c}...` : `${o}${c}`, '')
   return (
     <Link href={`/ingresso/${id}`}>
@@ -25,10 +25,8 @@ export function TicketCard({ id, qtd_ingressos, tipo_ingresso, nome_completo, va
           </div>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">oferta por:</span>
-              <span className="font-medium text-gray-800">
-                { nome_completo.split(' ')[0].split('', 9).reduce((o, c) => o.length === 8 ? `${o}${c}...` : `${o}${c}`, '') }
-              </span>
+              <span className="text-gray-600">Formato:</span>
+              <span className="font-medium text-gray-800">{formato_ingresso}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Tipo:</span>
