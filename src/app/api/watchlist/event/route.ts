@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { validateWhatsapp } from "@/services/validate_whatsapp";
 import prisma from "@/lib/db";
 
 export async function POST(req: NextRequest) {
 
     const data = await req.json();
+
+    const isValid = await validateWhatsapp(data.contato_whatsapp);
+
+    if (!isValid) {
+        return NextResponse.json({ message: "Número de WhatsApp inválido." }, { status: 400 });
+    }
 
     const checkWatchlist = await prisma.watchlist.findFirst({
         where: {
