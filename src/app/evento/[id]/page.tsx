@@ -51,13 +51,12 @@ export default function EventPage() {
                 {formatDateString(event.date)}
               </h1>
             </div>
-          </div>
-
-          <div className="px-4 py-6 space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-[#2248FF]">Detalhes do Evento</h2>
+            <div className="absolute bottom-8 right-8">
               <NotificationModal eventoId={event.id} eventName={event.nome} />
             </div>
+          </div>
+          
+          <div className="px-4 py-6 space-y-6">
 
             <AdBanner />
 

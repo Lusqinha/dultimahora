@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
-import { Bell } from 'lucide-react'
+import { BellIcon } from 'lucide-react'
 
 interface NotificationModalProps {
     eventoId: number
@@ -42,9 +42,8 @@ export function NotificationModal({ eventoId, eventName }: NotificationModalProp
 
     return (
         <>
-            <Button onClick={() => setIsOpen(true)} className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90">
-                <Bell/>
-                Notifique-me
+            <Button onClick={() => setIsOpen(true)} className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90 rounded-full w-8 h-8">
+                <BellIcon width={50} height={50} />
             </Button>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent>
