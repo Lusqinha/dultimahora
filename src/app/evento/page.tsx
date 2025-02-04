@@ -6,6 +6,7 @@ import type { Evento } from "@prisma/client"
 import { api } from "@/lib/api"
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event/event-card"
+import { KeywordNotificationModal } from "@/components/keyword-notification-modal"
 
 const ITEMS_PER_PAGE = 12
 
@@ -55,7 +56,7 @@ export default function EventsPage() {
   }, [page, filteredEvents])
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
+    <div className="min-h-screen px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold text-center text-[#2248FF] mb-8">Eventos Disponíveis</h1>
 
@@ -84,6 +85,14 @@ export default function EventsPage() {
         )}
 
         {isLoading && displayedEvents.length > 0 && <div className="text-center py-4">Carregando mais eventos...</div>}
+
+        {/* New section for keyword notifications */}
+        <div className="mt-12 text-center">
+          <p className="text-lg text-gray-600 mb-4">
+            Não encontrou o que estava procurando? Receba um aviso no seu WhatsApp quando houver algo relacionado.
+          </p>
+          <KeywordNotificationModal />
+        </div>
       </div>
     </div>
   )
