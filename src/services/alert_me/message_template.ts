@@ -1,6 +1,18 @@
+export interface messagesTemplate { 
+    Notificacao_Evento: string,
+    Notificacao_Ingresso: string,
+    Alerta_InformarVenda: string,
+    Solicitar_feedback: string,
+    Agradecimento: string,
+}
 
+type AtLeastOne<T> = {
+    [K in keyof T]: Pick<T, K>
+}[keyof T]
 
-export const messages = {
+export type PartialMessagesTemplate = AtLeastOne<messagesTemplate>
+
+export const template_messages = {
     Notificacao_Evento: `Olá, {nome}! Um evento novo foi criado e condiz com seu alerta de "{alerta}", acesse o link abaixo para visualizar! \n\n{link}`,
     Notificacao_Ingresso: `Olá, {nome}! Um ingresso novo foi anunciado para o evento "{evento}", acesse o link abaixo para visualizar! \n\n{link}`,
     Alerta_InformarVenda: `Olá, {nome}! O seu ingresso para o evento {evento} foi vendido? É extremamente importante para o nosso crescimento que você confirme a vinda na nossa plataforma! Acesse o link abaixo para informar \n\n{link}`,

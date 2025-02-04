@@ -1,4 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
+import { matchEvent } from "@/services/alert_me/matcher";
 import prisma from "@/lib/db";
 
 export async function POST(req: NextRequest) {
@@ -19,6 +20,9 @@ export async function POST(req: NextRequest) {
             disponivel: true
         }
     })
+
+    console.log("ID ingresso:", ingresso.eventoId);
+    matchEvent(ingresso.eventoId);
 
     return NextResponse.json(ingresso, { status: 201 });
 }
