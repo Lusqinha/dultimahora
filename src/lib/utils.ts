@@ -16,3 +16,8 @@ export function smallDateString(date: Date) {
 
   return `${formatter.format(fixed_date)}`
 }
+
+export function validateNumber(phoneNumber: string) {
+  const regex = /^\+[1-9]\d{1,14}$/;
+  return regex.test(phoneNumber);
+}

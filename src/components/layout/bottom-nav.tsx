@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Plus, Calendar, Ticket } from "lucide-react"
+import { Calendar, Ticket, Bell, HandCoins } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -21,16 +21,6 @@ export function BottomNav() {
                 <span>Meu ingresso</span>
             </Link>
             <Link
-                href="/"
-                className={cn(
-                    "flex flex-col items-center justify-center text-xs",
-                    pathname === "/" ? "text-blue-600" : "text-gray-500",
-                )}
-            >
-                <Home className="h-5 w-5" />
-                <span>Início</span>
-            </Link>
-            <Link
                 href="/evento"
                 className={cn(
                     "flex flex-col items-center justify-center text-xs",
@@ -41,13 +31,24 @@ export function BottomNav() {
                 <span>Eventos</span>
             </Link>
             <Link
+                href="/notificacao"
+                className={cn(
+                    "flex flex-col items-center justify-center text-xs",
+                    pathname === "/notificacao" ? "text-blue-600" : "text-gray-500",
+                )}
+            >
+                <Bell className="h-5 w-5" />
+                <span>Notifique-me</span>
+            </Link>
+           
+            <Link
                 href="/revender"
                 className={cn(
                     "flex flex-col items-center justify-center text-xs",
                     pathname === "/revender" ? "text-blue-600" : "text-gray-500",
                 )}
             >
-                <Plus className="h-5 w-5" />
+                <HandCoins className="h-5 w-5" />
                 <span>Revender</span>
             </Link>
         </nav>

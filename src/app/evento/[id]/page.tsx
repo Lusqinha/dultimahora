@@ -7,8 +7,8 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { BackArrow } from "@/components/layout/back-arrow"
 import Image from "next/image"
-import type React from "react"
 import { AdBanner } from "@/components/home/ad-banner"
+import { NotificationModal } from "@/components/notification-modal"
 
 import { TicketList } from "@/components/ticket/ticket-list"
 import { api } from "@/lib/api"
@@ -46,11 +46,18 @@ export default function EventPage() {
             <Image src={banner || "/placeholder.svg"} alt={event.nome} layout="fill" objectFit="cover" priority />
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-start p-4 sm:p-6 flex-col justify-end">
               <h1 className="text-2xl text-center sm:text-3xl md:text-4xl font-bold text-white">{event.nome}</h1>
-              <h1 className="text-lg text-center sm:text-xl md:text-2xl font-bold text-white flex gap-2"><CalendarDaysIcon/>{formatDateString(event.date)}</h1>
+              <h1 className="text-lg text-center sm:text-xl md:text-2xl font-bold text-white flex gap-2">
+                <CalendarDaysIcon />
+                {formatDateString(event.date)}
+              </h1>
+            </div>
+            <div className="absolute bottom-8 right-8">
+              <NotificationModal eventoId={event.id} eventName={event.nome} />
             </div>
           </div>
-
+          
           <div className="px-4 py-6 space-y-6">
+
             <AdBanner />
 
             <div>

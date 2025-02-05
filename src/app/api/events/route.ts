@@ -1,4 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
+import { matchKeyword } from "@/services/alert_me/matcher";
+
 import AWS from 'aws-sdk';
 
 import prisma from "@/lib/db";
@@ -83,6 +85,9 @@ export async function POST(req: NextRequest) {
       banner_path: file_path,
     }
   });
+
+  // Verificar se o evento possui uma keyword
+  matchKeyword(evento.nome, evento.id);
 
   return NextResponse.json(evento, { status: 201 });
 }
