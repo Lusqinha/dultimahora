@@ -1,11 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
 import { KeywordNotificationModal } from "@/components/keyword-notification-modal"
-import { Button } from "@/components/ui/button"
-
 export default function NotificationPage() {
-    const [showModal, setShowModal] = useState(false)
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4">
