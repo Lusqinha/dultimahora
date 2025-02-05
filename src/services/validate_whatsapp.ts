@@ -7,10 +7,11 @@ export async function validateWhatsapp(whatsapp: string): Promise<boolean> {
 
     try {
         await whatsappApi.post(`/chat/whatsappNumbers/${whatsappApi_instance}`, {
-            contato_whatsapp: formattedPhone
+            numbers: [formattedPhone]
         })
         return true
     } catch (error) {
+        console.error("Erro validando whatsapp: ",error)
         return false
     }
 }
