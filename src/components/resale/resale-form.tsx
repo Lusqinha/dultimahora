@@ -341,13 +341,15 @@ export function ResaleForm() {
           <DialogHeader>
             <DialogTitle>Anúncio criado com sucesso!</DialogTitle>
             <DialogDescription>
-              Sua senha para editar este anúncio é: <strong>{password}</strong>
+              A senha do seu anúncio é:<br />
+              <strong>{password}</strong>
               <br />
-              Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro.
+              Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro. (Tambem irá receber a senha Via WhatsApp)
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button
+              className="bg-[#FBC004] text-white hover:bg-[#FBC004]/90"
               onClick={() => {
                 setShowSuccessModal(false)
                 redirect(`/evento/${selectedEvent?.id}`)
