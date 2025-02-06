@@ -2,7 +2,7 @@
 
 import type { Evento as PrismaEvento, Ingresso } from "@prisma/client"
 import { formatDateString } from "@/lib/utils"
-import { CalendarDaysIcon, TicketIcon } from "lucide-react"
+import { CalendarDaysIcon, TicketsIcon } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { BackArrow } from "@/components/layout/back-arrow"
@@ -43,7 +43,7 @@ export default function EventPage() {
       {event && (
         <>
           <div className="relative w-full h-64 sm:h-80 md:h-96">
-            <Image src={banner || "/placeholder.svg"} alt={event.nome} layout="fill" objectFit="cover" priority />
+            <Image src={banner || "img/dultimahora-evento-placeholder.png"} alt={event.nome} layout="fill" objectFit="cover" priority />
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-start p-4 sm:p-6 flex-col justify-end">
               <h1 className="text-2xl text-center sm:text-3xl md:text-4xl font-bold text-white">{event.nome}</h1>
               <h1 className="text-lg text-center sm:text-xl md:text-2xl font-bold text-white flex gap-2">
@@ -51,7 +51,7 @@ export default function EventPage() {
                 {formatDateString(event.date)}
               </h1>
             </div>
-            <div className="absolute bottom-8 right-8">
+            <div className="absolute bottom-7 right-8 scale-125">
               <NotificationModal eventoId={event.id} eventName={event.nome} />
             </div>
           </div>
@@ -62,11 +62,24 @@ export default function EventPage() {
 
             <div>
               <h2 className="text-2xl font-bold text-[#2248FF] mb-4 flex text-center justify-center items-center">
-                <TicketIcon className="mr-2" />
-                Ingressos Disponíveis
+                <TicketsIcon className="mr-2" />
+                Ingressos anunciados
               </h2>
               <TicketList tickets={event.ingressos} />
             </div>
+          </div>
+          <div className="mt-12 w-3/4 mx-auto text-center">
+            <p className="text-xl text-gray-700 mb-4">
+              <span>
+                Quer ficar de olho aqui?👀
+
+              </span>
+              <br />
+              <span className="text-gray-500 text-xs">
+                Receba um aviso no <u>WhatsApp</u> sempre que<br /> anunciarem neste evento!
+              </span>
+            </p>
+            <NotificationModal eventoId={event.id} eventName={event.nome} btnType="full" />
           </div>
         </>
       )}
