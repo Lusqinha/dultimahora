@@ -2,9 +2,9 @@
 import { type Evento as PrismaEvento } from "@prisma/client"
 
 interface Evento extends PrismaEvento {
-  _count: {
-    ingressos: number;
-  };
+  _count?: {
+    ingressos: number
+  }
 }
 import Link from "next/link"
 
@@ -16,6 +16,9 @@ import { CalendarDaysIcon } from "lucide-react"
 
 
 export default function EventCard({ id, nome, date, banner_path, _count }: Evento) {
+
+  const ingressos = _count?.ingressos || 0
+
   return (
     <Link href={`/evento/${id}`}>
       <Card className={`overflow-hidden bg-white hover:shadow-lg transition-shadow mx-auto min-h-full flex flex-col justify-between cursor-pointer`}>
@@ -28,11 +31,11 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
             />
             <div className=" text-white flex items-center absolute top-0 right-0 bg-[#FFC006] rounded-bl-xl px-3 py-1">
               <p className="bg-[#FFC006] flex items-center font-extrabold gap-1 rounded-full" >
-                <span>{_count.ingressos}</span>
+                <span>{ingressos}</span>
                 <Image src="/img/ticket-event-card.svg" alt="Ingressos" width={15} height={15} />
               </p>  
             </div>
-            {_count.ingressos > 3 && (
+            {ingressos > 3 && (
               <div className="absolute top-0 left-0 bg-[#FFC006] text-white font-bold px-2 py-1 rounded-br-xl">
                 <p>🔥Em Alta!</p>
               </div>
