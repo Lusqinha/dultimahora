@@ -89,7 +89,7 @@ export function ResaleForm() {
   const [isCreatingEvent, setIsCreatingEvent] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [eventsLoaded, setEventsLoaded] = useState(false)
+  const [eventsLoaded] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
