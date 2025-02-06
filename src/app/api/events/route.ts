@@ -37,6 +37,12 @@ const uploadImageToMinio = async (file: File) => {
 
 export async function GET() {
   const events = await prisma.evento.findMany({
+    where: {
+      date: {
+        // Filtra eventos que ainda não aconteceram, pegando a data atual, ignorando a hora
+        gte: new Date(new Date().toDateString())
+      }
+    },
     select: {
       id: true,
       nome: true,
