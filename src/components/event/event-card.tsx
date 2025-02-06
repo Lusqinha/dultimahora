@@ -44,7 +44,7 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
           <div className="px-4 my-4 flex flex-col text-white items-start justify-between">
             <h2 className=" lg:text-sm font-bold text-[#0030B3]">{nome.toLocaleUpperCase()}</h2>
             <div className="text-sm flex items-center text-[#2248FF]/85">
-              <CalendarDaysIcon className="mr-2" size={24} />
+              <CalendarDaysIcon className="mr-1" size={15} />
               <h3>{smallDateString(date)}</h3>
             </div>
           </div>
