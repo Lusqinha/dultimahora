@@ -10,8 +10,8 @@ export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso,
     <Link href={`/ingresso/${id}`}>
       <Card className="bg-white hover:bg-gray-50 min-h-full transition-all duration-300 shadow-md m-3 sm:m-auto min-w-[318px] max-w-[400px] mx-auto rounded-xl overflow-hidden border border-gray-200 flex flex-col justify-center cursor-pointer"> 
         <CardContent className="p-6 min-h-full">
-          <CardHeader className="text-2xl font-bold text-[#2248FF] -mt-8 border-b border-gray-200 py-4">
-            <span className="flex items-center justify-center text-center text-md sm:text-lg">
+          <CardHeader className="text-xl font-bold text-[#2248FF] -mt-8 border-b border-gray-200 py-4">
+            <span className="flex items-center justify-center text-center text-lg sm:text-xl">
               <User2 className="mr-2" />
               {`${nome_completo_formatado} ofereceu:`}
             </span>
@@ -19,7 +19,7 @@ export function TicketCard({ id, formato_ingresso, qtd_ingressos, tipo_ingresso,
           <div className="flex items-center justify-between my-4">
             <div className="flex items-center">
               <Image src={'/img/tickets/ticket-azul.svg'} width={14} height={14} alt="ticket azul" className="mr-2" />
-              <span className="text-gray-600">{qtd_ingressos > 1 ? `${qtd_ingressos} entradas` : `${qtd_ingressos} entrada`}</span>
+              <span className="text-gray-800 text-2xl">{qtd_ingressos > 1 ? `${qtd_ingressos} Entradas` : `${qtd_ingressos} Entrada`}</span>
             </div>
             <span className="text-2xl font-bold text-[#2248FF]">R${valor_un.toFixed(2)}</span>
           </div>
