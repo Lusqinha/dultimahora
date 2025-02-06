@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 
 interface EventCreationFormProps {
     form: any // Replace 'any' with the actual form type
+
 }
 
 export function EventCreationForm({ form }: EventCreationFormProps) {
@@ -32,19 +33,6 @@ export function EventCreationForm({ form }: EventCreationFormProps) {
                         <FormLabel>Data do evento *</FormLabel>
                         <FormControl>
                             <Input type="date" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
-            />
-            <FormField
-                control={form.control}
-                name="link"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Link do Evento</FormLabel>
-                        <FormControl>
-                            <Input type="url" placeholder="https://..." {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
