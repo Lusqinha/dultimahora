@@ -6,6 +6,7 @@ import type { Evento } from "@prisma/client"
 import { api } from "@/lib/api"
 import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event/event-card"
+import Image from "next/image"
 import { KeywordNotificationModal } from "@/components/keyword-notification-modal"
 
 const ITEMS_PER_PAGE = 12
@@ -56,15 +57,23 @@ export default function EventsPage() {
   }, [page, filteredEvents])
 
   return (
-    <div className="min-h-screen px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold text-center text-[#2248FF] mb-8">Eventos Disponíveis</h1>
+    <div className="min-h-screen px-4 pb-8 md:pt-10">
 
-        <div className="relative mb-8">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+      <div className="flex md:hidden justify-center p-5 mb-8 border-b">
+        <Image
+          src={"/img/isologo-laranja.svg"}
+          alt="Logo do evento"
+          width={90}
+          height={90}
+        />
+      </div>
+
+      <div className="max-w-4xl md:mt-10 mx-auto">
+        <div className="relative mb-8 mx-10">
+          <Search strokeWidth={3} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2248FF] h-6 w-6" />
           <Input
-            placeholder="Buscar eventos..."
-            className="pl-10 w-full"
+            placeholder="Buscar eventos disponíveis"
+            className="pl-12 py-7 w-full text-sm sm:text-base border-2 border-[#ffc006] focus:border-[#ffc006]/50 rounded-lg hover:border-[#ffc006] outline-none focus:ring-2 focus:shadow-lg shadow-md bg-gray-100"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -88,8 +97,14 @@ export default function EventsPage() {
 
         {/* New section for keyword notifications */}
         <div className="mt-12 text-center">
-          <p className="text-lg text-gray-600 mb-4">
-            Não encontrou o que estava procurando? Receba um aviso no seu WhatsApp quando houver algo relacionado.
+          <p className="text-lg text-gray-700 mb-4">
+            <span>
+              Não encontrou o evento que procura?
+            </span>
+            <br />
+            <span className="text-gray-500 text-xs">
+              Receba um aviso no <u>WhatsApp</u> se ele aparecer por aqui
+            </span>
           </p>
           <KeywordNotificationModal />
         </div>
