@@ -70,9 +70,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <AdBanner className="w-11/12 mx-auto mb-10" />
+      <AdBanner className="w-11/12 md:w-3/5 mx-auto mt-5" />
       <AboutUs />
-      <ContactUs className="w-11/12 mx-auto my-5"/>
+      <ContactUs className="w-11/12 mx-auto mb-5"/>
     </section>
     </main>
   )
