@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, Ticket, Bell, HandCoins } from "lucide-react"
+import { Calendar, BellRing, Tickets, Tag } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -17,8 +17,8 @@ export function BottomNav() {
                     pathname === "/ingresso/editar" ? "text-blue-600" : "text-gray-500",
                 )}
             >
-                <Ticket className="h-5 w-5" />
-                <span>Meu ingresso</span>
+                <Tag className="h-5 w-5" />
+                <span>Meu anúncio</span>
             </Link>
             <Link
                 href="/evento"
@@ -30,16 +30,7 @@ export function BottomNav() {
                 <Calendar className="h-5 w-5" />
                 <span>Eventos</span>
             </Link>
-            <Link
-                href="/notificacao"
-                className={cn(
-                    "flex flex-col items-center justify-center text-xs",
-                    pathname === "/notificacao" ? "text-blue-600" : "text-gray-500",
-                )}
-            >
-                <Bell className="h-5 w-5" />
-                <span>Notifique-me</span>
-            </Link>
+
            
             <Link
                 href="/revender"
@@ -48,8 +39,18 @@ export function BottomNav() {
                     pathname === "/revender" ? "text-blue-600" : "text-gray-500",
                 )}
             >
-                <HandCoins className="h-5 w-5" />
+                <Tickets className="h-5 w-5" />
                 <span>Revender</span>
+            </Link>
+            <Link
+                href="/notificacao"
+                className={cn(
+                    "flex flex-col items-center justify-center text-xs",
+                    pathname === "/notificacao" ? "text-blue-600" : "text-gray-500",
+                )}
+            >
+                <BellRing className="h-5 w-5" />
+                <span>Notifique-me</span>
             </Link>
         </nav>
     )
