@@ -31,7 +31,7 @@ export default function TicketDetailsPage() {
 
   if (!ticketDetails) {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center">
         <div className="text-2xl font-bold text-[#2248FF]">Carregando...</div>
       </main>
     )
@@ -45,7 +45,7 @@ export default function TicketDetailsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-8 px-4">
+    <main className="min-h-screen py-8 px-4">
       <BackArrow />
       <div className="max-w-2xl mx-auto space-y-8">
         {/* Ad Banner */}
@@ -63,7 +63,6 @@ export default function TicketDetailsPage() {
         {/* Ticket Details */}
         <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
           <div className="flex items-center space-x-4">
-            <Ticket className="text-[#2248FF] w-8 h-8" />
             <div>
               <h2 className="text-gray-600">Quantidade:</h2>
               <p className="text-2xl font-bold text-[#2248FF]">
@@ -73,7 +72,6 @@ export default function TicketDetailsPage() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <DollarSign className="text-[#2248FF] w-8 h-8" />
             <div>
               <h2 className="text-gray-600">Valor (cada):</h2>
               <p className="text-2xl font-bold text-[#2248FF]">R$ {ticketDetails.valor_un.toFixed(2)}</p>
@@ -81,7 +79,6 @@ export default function TicketDetailsPage() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Ticket className="text-[#2248FF] w-8 h-8" />
             <div>
               <h2 className="text-gray-600">Formato:</h2>
               <p className="text-2xl font-bold text-[#2248FF]">{ticketDetails.formato_ingresso}</p>
@@ -89,22 +86,11 @@ export default function TicketDetailsPage() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <User className="text-[#2248FF] w-8 h-8" />
             <div>
               <h2 className="text-gray-600">Anunciante:</h2>
               <p className="text-2xl font-bold text-[#2248FF]">{ticketDetails.nome_completo}</p>
             </div>
           </div>
-        </div>
-
-        {/* Info Message */}
-        <div className="bg-[#FFC006] rounded-lg p-6 relative">
-          <AlertTriangle className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-[#FFC006] w-14 h-14 p-1 bg-white rounded-full " />
-          <p className="text-center text-white font-bold mt-4">
-            {`O D'Ultimahora é uma plataforma para unir quem quer vender,
-            com quem quer comprar. Lembre-se de tomar cuidado ao fazer
-            a negociação, escolher lugares públicos, se certificar etc...`}
-          </p>
         </div>
 
         {/* WhatsApp Button */}
