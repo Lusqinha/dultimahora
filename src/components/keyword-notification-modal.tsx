@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
-import { BellIcon } from "lucide-react"
+import { BellRingIcon } from "lucide-react"
 
 export function KeywordNotificationModal() {
   const [isOpen, setIsOpen] = useState(false)
@@ -75,8 +75,8 @@ export function KeywordNotificationModal() {
   return (
     <>
       <Button onClick={() => setIsOpen(true)} className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90">
-        <BellIcon className="w-6 h-6" />
-        Receber Avisos
+        <BellRingIcon className="w-6 h-6" />
+        Notifique-me
       </Button>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
