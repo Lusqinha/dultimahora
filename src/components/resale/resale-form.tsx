@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 import { motion, AnimatePresence } from "framer-motion"
-import { Loader2 } from "lucide-react"
+import { Loader2, TicketsIcon } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { api } from "@/lib/api"
 import { Steps } from "@/components/ui/steps"
-import { smallDateString } from "@/lib/utils"
+import EventCard from "@/components/event/event-card"
 
 import { EventSearch } from "./step-form/event-search"
 import { EventCreationForm } from "@/components/resale/step-form/event-creation-form"
@@ -46,7 +46,6 @@ const formSchema = z.object({
       message: "Data do evento é obrigatória.",
     })
     .optional(),
-  link: z.string().url().optional().or(z.literal("")),
   banner: z
     .any()
     .optional()
@@ -90,6 +89,7 @@ export function ResaleForm() {
   const [isCreatingEvent, setIsCreatingEvent] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [eventsLoaded, setEventsLoaded] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -97,8 +97,11 @@ export function ResaleForm() {
     },
   })
 
+  
+
   const fetchEvents = useCallback(() => {
-    api
+    if (!eventsLoaded) {
+      api
       .get("events")
       .then((response) => {
         setEvents(response.data)
@@ -106,8 +109,8 @@ export function ResaleForm() {
       .catch((error) => {
         console.error(error)
         toast.error("Erro ao carregar eventos. Tente novamente.")
-      })
-  }, [])
+      })}
+  }, [eventsLoaded])
 
   useEffect(() => {
     fetchEvents()
@@ -124,7 +127,6 @@ export function ResaleForm() {
       if (values.name) formData.append("nome", values.name)
       if (values.date) formData.append("date", values.date)
       if (values.banner) formData.append("banner", values.banner as File)
-      if (values.link) formData.append("evento_weblink", values.link || "")
 
       const response = await api.post("events", formData, {
         headers: {
@@ -153,7 +155,6 @@ export function ResaleForm() {
         if (values.name) formData.append("nome", values.name)
         if (values.date) formData.append("date", values.date)
         if (values.banner) formData.append("banner", values.banner as File)
-        if (values.link) formData.append("evento_weblink", values.link || "")
 
         const eventResponse = await api.post("events", formData, {
           headers: {
@@ -234,8 +235,19 @@ export function ResaleForm() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <h1 className="text-2xl font-semibold mb-8">Criar anúncio</h1>
+    <div className="w-full max-w-2xl mx-auto md:pt-10">
+      <h1 className="text-2xl flex items-center justify-center gap-3 font-bold text-center text-[#2248FF] pb-6"><TicketsIcon />Revender Ingresso</h1>
+
+      {(currentStep === 0) && (
+        <div className="bg-[#FBC004] rounded-2xl p-4 mb-10">
+          <p className="text-justify text-sm text-white font-bold [text-align-last:center]">
+            {`O D'Ultimahora é uma plataforma para unir quem quer vender,
+              com quem quer comprar, sem qualquer taxa ou cobrança.
+              Ao anunciar seu ingresso os interessados irão lhe chamar, e a
+              negociação é por sua conta...`}
+          </p>
+        </div>
+      )}
 
       <div className="mb-12">
         <Steps currentStep={currentStep} steps={steps} />
@@ -269,14 +281,13 @@ export function ResaleForm() {
                     <EventCreationForm form={form} />
                   ) : (
                     <div className="space-y-4">
-                      <h3 className="font-bold">Evento Selecionado: {selectedEvent?.nome}</h3>
-                      <p>
-                        Data:{" "}
-                        {selectedEvent?.date ? smallDateString(new Date(selectedEvent.date)) : "Data não disponível"}
-                      </p>
-                      <p>Local: {selectedEvent?.local}</p>
+                      <h3 className="font-bold">Evento Selecionado: </h3>
+                        
+                      {selectedEvent && <EventCard {...selectedEvent} />}
+                      
                       <Button
                         type="button"
+                          className="bg-[#2248ff] text-white hover:bg-[#2248ff]/90"  
                         onClick={() => {
                           setSelectedEvent(null)
                           setCurrentStep(0)
@@ -304,7 +315,7 @@ export function ResaleForm() {
             {!isLastStep ? (
               <Button
                 type="button"
-                className="ml-auto bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
+                className="ml-auto bg-[#FBC004] text-white hover:bg-[#FBC004]/90"
                 onClick={handleNext}
                 disabled={isLoading}
               >
@@ -314,7 +325,7 @@ export function ResaleForm() {
             ) : (
               <Button
                 type="submit"
-                className="ml-auto bg-[#FBC004] text-black hover:bg-[#FBC004]/90"
+                className="ml-auto bg-[#FBC004] text-white hover:bg-[#FBC004]/90"
                 disabled={isLoading}
               >
                 {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
