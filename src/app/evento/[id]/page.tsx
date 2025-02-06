@@ -68,7 +68,7 @@ export default function EventPage() {
               <TicketList tickets={event.ingressos} />
             </div>
           </div>
-          <div className="mt-12 w-3/4 mx-auto text-center">
+          <div className="my-12 w-3/4 mx-auto text-center">
             <p className="text-xl text-gray-700 mb-4">
               <span>
                 Quer ficar de olho aqui?👀
