@@ -28,7 +28,9 @@ export default function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden">
       <Hero />
-      <section className="bg-white py-16 w-11/12 mx-auto">
+      <section className="w-full bg-white rounded-t-2xl -mt-5">
+
+      <section className="py-16 w-11/12 mx-auto">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#2248FF] text-center mb-12">{`Eventos em D'estaque`}</h2>
           <div className="relative">
@@ -36,15 +38,15 @@ export default function HomePage() {
               <div className="flex">
                 {events.slice(0,4).map((event) => (
                   <div
-                    key={event.id}
-                    className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] px-4"
+                  key={event.id}
+                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] px-4"
                   >
                     <EventCard
                       _count={{
                         ingressos: 0,
                       }}
                       {...event}
-                    />
+                      />
                   </div>
                 ))}
               </div>
@@ -54,7 +56,7 @@ export default function HomePage() {
               size="icon"
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2"
               onClick={scrollPrev}
-            >
+              >
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <Button
@@ -71,6 +73,7 @@ export default function HomePage() {
       <AdBanner className="w-11/12 mx-auto mb-10" />
       <AboutUs />
       <ContactUs className="w-11/12 mx-auto my-5"/>
+    </section>
     </main>
   )
 }
