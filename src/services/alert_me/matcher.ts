@@ -53,7 +53,12 @@ async function handleAlert(watchlists: Watchlist[], event_id: number) {
 export async function matchEvent(eventoId: number) {
     const watchlists = await prisma.watchlist.findMany({
         where: {
-            eventoId: eventoId
+            eventoId: eventoId,
+            evento: {
+                date: {
+                    gte: new Date(new Date().toDateString())
+                }
+            }
         }
     })
 
@@ -74,6 +79,11 @@ export async function matchKeyword(event_name: string, event_id: number) {
                 keyword: {
                     contains: word,
                     mode: 'insensitive'
+                },
+                evento: {
+                    date: {
+                        gte: new Date(new Date().toDateString())
+                    }
                 }
             }
         })
