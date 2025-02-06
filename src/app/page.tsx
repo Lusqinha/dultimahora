@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { api } from "@/lib/api"
 import useEmblaCarousel from "embla-carousel-react"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { CalendarHeartIcon, ChevronLeft, ChevronRight } from "lucide-react"
 import { AdBanner } from "@/components/home/ad-banner"
 import { AboutUs } from "@/components/home/about-us"
 import { ContactUs } from "@/components/home/contact-us"
@@ -32,7 +32,7 @@ export default function HomePage() {
 
       <section className="py-16 w-11/12 mx-auto">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#2248FF] text-center mb-12">{`Eventos em D'estaque`}</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2248FF] text-center mb-8 flex items-center justify-center gap-2"><CalendarHeartIcon />{`Eventos em D'estaque`}</h2>
           <div className="relative">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex">
