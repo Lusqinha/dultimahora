@@ -46,6 +46,7 @@ model Venda {
   id        Int      @id @default(autoincrement())
   ingresso    Ingresso   @relation(fields: [ingressoId], references: [id])
   ingressoId  Int
+  qtd_ingressos_vendidos Int
   codigo_ingresso String @unique
   evento    Evento   @relation(fields: [eventoId], references: [id])
   eventoId  Int
