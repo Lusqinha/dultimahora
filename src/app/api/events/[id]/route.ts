@@ -11,7 +11,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
     try {
         const event = await prisma.evento.findUniqueOrThrow({
-            where: { id: eventId },
+            where: {
+                id: eventId
+            },
             select: {
                 id: true,
                 nome: true,
@@ -19,6 +21,10 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
                 local: true,
                 banner_path: true,
                 ingressos: {
+                    where: {
+                        disponivel: true, 
+                        qtd_ingressos: { gt: 0 }
+                    },
                     select: {
                         id: true,
                         nome_completo: true,
