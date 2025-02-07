@@ -22,7 +22,7 @@ export function EventSelectionModal({ isOpen, onClose, onEventSelect }: EventSel
     const [isLoading, setIsLoading] = useState(false)
     const [events, setEvents] = useState<Evento[]>([])
     
-    const getEvents = async (query: string) => {
+    const getEvents = async () => {
         setIsLoading(true)
         try {
             const response = await api.get<Evento[]>(`events/`)
@@ -35,7 +35,7 @@ export function EventSelectionModal({ isOpen, onClose, onEventSelect }: EventSel
     }
 
     useEffect(() => {
-        getEvents(searchTerm)
+        getEvents()
     }, [searchTerm])
 
     const searchEvents = (query: string) => {

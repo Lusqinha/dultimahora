@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 "use client"
 
 import { EditTicketForm } from "@/components/ticket/edit-ticket-form"

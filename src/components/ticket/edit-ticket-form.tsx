@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { useRouter } from "next/navigation"
 import { api } from "@/lib/api"
 import type { Evento } from "@prisma/client"
 import { Button } from "@/components/ui/button"
@@ -15,17 +14,8 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { toast } from "sonner"
-import { Loader2, Trash2 } from "lucide-react"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+import { Loader2 } from "lucide-react"
+
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -58,10 +48,8 @@ interface EditTicketFormProps {
   isUpdating: boolean
 }
 
-export function EditTicketForm({ defaultValues, ticketId, onSubmit, isUpdating }: EditTicketFormProps) {
-  const router = useRouter()
+export function EditTicketForm({ defaultValues, onSubmit, isUpdating }: EditTicketFormProps) {
   const [events, setEvents] = useState<Evento[]>([])
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -96,17 +84,6 @@ export function EditTicketForm({ defaultValues, ticketId, onSubmit, isUpdating }
     } catch (error) {
       console.error(error)
       toast.error("Erro ao atualizar anúncio. Tente novamente.")
-    }
-  }
-
-  async function handleDelete() {
-    try {
-      await api.delete(`tickets/${ticketId}`)
-      toast.success("Anúncio excluído com sucesso!")
-      router.push("/")
-    } catch (error) {
-      console.error(error)
-      toast.error("Erro ao excluir anúncio. Tente novamente.")
     }
   }
 

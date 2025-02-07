@@ -15,7 +15,7 @@ export default function NotificationPage() {
                     <Image src="/img/isologo-laranja.svg" alt="D'Ultima Hora Logo" width={90} height={90} priority />
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold text-[#2248FF] text-center mb-2">
-                    Receba notificações de eventos no D'
+                    {`Receba notificações de eventos no D'`}
                 </h1>
                 <p className="text-gray-600 text-center mb-8 max-w-md">
                     Receba um aviso no WhatsApp sempre que anunciarem um evento ou ingresso.

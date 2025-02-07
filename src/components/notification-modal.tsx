@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
-import { BellIcon } from "lucide-react"
+import { BellRingIcon } from "lucide-react"
 import type React from "react"
 
 interface NotificationModalProps {
@@ -83,14 +83,24 @@ export function NotificationModal({
         }
     }
 
+    const btn_full = (
+        <Button onClick={() => setInternalIsOpen(true)} className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90">
+            <BellRingIcon className="w-6 h-6" />
+            Notifique-me
+        </Button>
+    )
+    const btn_small = (
+        <Button
+            onClick={() => setInternalIsOpen(true)}
+            className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90 rounded-full w-8 h-8"
+        >
+            <BellRingIcon width={50} height={50} />
+        </Button>
+    )
+
     return (
         <>
-            <Button
-                onClick={() => setInternalIsOpen(true)}
-                className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90 rounded-full w-8 h-8"
-            >
-                <BellIcon width={50} height={50} />
-            </Button>
+            {btnType === "full" ? btn_full : btn_small}
             <Dialog open={isOpen} onOpenChange={handleClose}>
                 <DialogContent>
                     <DialogHeader>
