@@ -8,10 +8,10 @@ import Image from "next/image"
 
 export default function NotificationPage() {
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen md:pt-10">
             {/* Header Section */}
-            <div className="flex flex-col items-center pt-8 pb-6 px-4">
-                <div className="mb-8">
+            <div className="flex flex-col items-center pt-8 pb-6 px-4 md:mt-8">
+                <div className="mb-8 md:hidden">
                     <Image src="/img/isologo-laranja.svg" alt="D'Ultima Hora Logo" width={90} height={90} priority />
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold text-[#2248FF] text-center mb-2">
