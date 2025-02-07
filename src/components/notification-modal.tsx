@@ -7,17 +7,27 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
-import { BellRingIcon } from "lucide-react"
-import type React from "react" // Added import for React
+import { BellIcon } from "lucide-react"
+import type React from "react"
 
 interface NotificationModalProps {
     eventoId: number
     eventName: string
     btnType?: "full" | "small"
+    isOpen?: boolean
+    onClose?: () => void
 }
 
-export function NotificationModal({ eventoId, eventName, btnType }: NotificationModalProps) {
-    const [isOpen, setIsOpen] = useState(false)
+export function NotificationModal({
+    eventoId,
+    eventName,
+    btnType,
+    isOpen: controlledIsOpen,
+    onClose,
+}: NotificationModalProps) {
+    const [internalIsOpen, setInternalIsOpen] = useState(false)
+    const isOpen = controlledIsOpen ?? internalIsOpen
+    const handleClose = onClose ?? (() => setInternalIsOpen(false))
     const [fullName, setFullName] = useState("")
     const [whatsapp, setWhatsapp] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -62,7 +72,7 @@ export function NotificationModal({ eventoId, eventName, btnType }: Notification
                 contato_whatsapp: formattedPhone,
             })
             toast.success("Você será notificado sobre este evento!")
-            setIsOpen(false)
+            handleClose()
             setFullName("")
             setWhatsapp("")
         } catch (error) {
@@ -73,25 +83,15 @@ export function NotificationModal({ eventoId, eventName, btnType }: Notification
         }
     }
 
-    const btn_full = (
-        <Button onClick={() => setIsOpen(true)} className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90">
-            <BellRingIcon className="w-6 h-6" />
-            Notifique-me
-        </Button>
-    )
-    const btn_small = (
-        <Button
-            onClick={() => setIsOpen(true)}
-            className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90 rounded-full w-8 h-8"
-        >
-            <BellRingIcon width={50} height={50} />
-        </Button>
-    )
-
     return (
         <>
-            {btnType === "full" ? btn_full : btn_small}
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <Button
+                onClick={() => setInternalIsOpen(true)}
+                className="bg-[#FFC006] text-white hover:bg-[#FFC006]/90 rounded-full w-8 h-8"
+            >
+                <BellIcon width={50} height={50} />
+            </Button>
+            <Dialog open={isOpen} onOpenChange={handleClose}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Receba notificações sobre {eventName}</DialogTitle>
@@ -120,7 +120,7 @@ export function NotificationModal({ eventoId, eventName, btnType }: Notification
                                 aria-required="true"
                             />
                         </div>
-                        <Button type="submit" disabled={isSubmitting}>
+                        <Button type="submit" disabled={isSubmitting} className=" bg-[#FFC006] text-white hover:bg-[#FFC006]/50">
                             {isSubmitting ? "Enviando..." : "Enviar"}
                         </Button>
                     </form>
