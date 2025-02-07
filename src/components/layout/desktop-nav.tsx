@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Plus, Calendar, Ticket } from "lucide-react"
+import { Calendar, BellRing, Tickets, Tag, Home } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -16,6 +16,11 @@ export function DesktopNav() {
             icon: Home,
         },
         {
+            href: "/ingresso/editar",
+            label: "Meu Ingresso",
+            icon: Tag,
+        },
+        {
             href: "/evento",
             label: "Eventos",
             icon: Calendar,
@@ -23,13 +28,14 @@ export function DesktopNav() {
         {
             href: "/revender",
             label: "Revender",
-            icon: Plus,
+            icon: Tickets,
         },
         {
-            href: "/ingresso/editar",
-            label: "Meu Ingresso",
-            icon: Ticket,
-        },
+            href: "/notificacao",
+            label: "Notifique-me",
+            icon: BellRing
+        }
+
     ]
 
     return (
