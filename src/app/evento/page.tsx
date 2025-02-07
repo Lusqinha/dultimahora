@@ -58,7 +58,6 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen px-4 pb-8 md:pt-10">
-
       <div className="flex md:hidden justify-center p-5 mb-8 border-b">
         <Image
           src={"/img/isologo-laranja.svg"}
@@ -67,13 +66,12 @@ export default function EventsPage() {
           height={90}
         />
       </div>
-
       <div className="max-w-4xl md:mt-10 mx-auto">
-        <div className="relative mb-8 mx-10">
+        <div className="relative mb-8 mx-2">
           <Search strokeWidth={3} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2248FF] h-6 w-6" />
           <Input
             placeholder="Buscar eventos disponíveis"
-            className="pl-12 py-7 w-full text-sm sm:text-base border-2 border-[#ffc006] focus:border-[#ffc006]/50 rounded-lg hover:border-[#ffc006] outline-none focus:ring-2 focus:shadow-lg shadow-md bg-gray-100"
+            className="pl-12 py-6 w-full text-sm sm:text-base border-2 border-[#ffc006] focus:border-[#ffc006]/50 rounded-lg hover:border-[#ffc006] outline-none focus:ring-2 focus:shadow-lg shadow-md bg-gray-100"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
