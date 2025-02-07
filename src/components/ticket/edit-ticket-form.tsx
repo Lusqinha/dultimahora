@@ -264,35 +264,9 @@ export function EditTicketForm({ defaultValues, ticketId, onSubmit, isUpdating }
                 "Salvar Alterações"
               )}
             </Button>
-
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={() => setShowDeleteDialog(true)}
-              className="w-full bg-red-500 hover:bg-red-600"
-            >
-              <Trash2 className="mr-2 h-4 w-4" /> Excluir Anúncio
-            </Button>
           </div>
         </form>
       </Form>
-
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Esta ação não pode ser desfeita. Isso excluirá permanentemente seu anúncio.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-500 hover:bg-red-600">
-              Sim, excluir anúncio
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   )
 }
