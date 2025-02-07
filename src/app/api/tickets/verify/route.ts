@@ -10,10 +10,17 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Missing body" }, { status: 400 });
     }
 
+    if (cpf.replace(/\D/g, "").length !== 11) {
+        return NextResponse.json({ error: "Invalid CPF" }, { status: 400 });
+    }
+
     const ingresso = await prisma.ingresso.findFirstOrThrow({
         where: {
             codigo_ingresso,
-            cpf
+            cpf,
+            qtd_ingressos: {
+                gt: 0
+            }
         }
     })
 
