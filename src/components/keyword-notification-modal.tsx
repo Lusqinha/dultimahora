@@ -122,7 +122,7 @@ export function KeywordNotificationModal() {
                 aria-required="true"
               />
             </div>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting} className=" bg-[#FFC006] text-white hover:bg-[#FFC006]/90">
               {isSubmitting ? "Enviando..." : "Enviar"}
             </Button>
           </form>
