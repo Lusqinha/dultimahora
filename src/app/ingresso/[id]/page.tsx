@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import type { Ingresso } from "@prisma/client"
 import { MessageCircle } from "lucide-react"
 import { BackArrow } from "@/components/layout/back-arrow"
+import { AdBanner } from "@/components/home/ad-banner"
 
 interface TicketDetailsType extends Ingresso {
   evento: {
@@ -47,13 +48,9 @@ export default function TicketDetailsPage() {
   return (
     <main className="min-h-screen py-8 px-4">
       <BackArrow />
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="max-w-2xl mx-auto space-y-8 md:pt-12">
         {/* Ad Banner */}
-        <div className="bg-[#FFC006] rounded-lg p-6 text-center shadow-lg">
-          <h3 className="text-xl font-bold text-white mb-2">Espaço Publicitário</h3>
-          <p className="text-white mb-4">Alcance seu público-alvo neste evento!</p>
-          <Button className="bg-white text-[#FFC006] hover:bg-gray-100">Anuncie Aqui</Button>
-        </div>
+        <AdBanner />
 
         {/* Event Name */}
         <div className="bg-[#2248FF] text-white text-center py-4 px-6 rounded-lg">
