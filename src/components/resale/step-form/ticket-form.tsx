@@ -116,7 +116,8 @@ export function TicketFormatPriceForm({ form }: TicketFormatPriceFormProps) {
                 name="price"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Valor que quer vender(cada) *</FormLabel>
+                        <FormLabel>Valor para vender cada ingresso *</FormLabel>
+                        {/* show */}
                         <FormControl>
                             <Input
                                 type="number"
