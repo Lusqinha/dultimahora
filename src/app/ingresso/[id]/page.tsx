@@ -59,6 +59,14 @@ export default function TicketDetailsPage() {
 
         {/* Ticket Details */}
         <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+
+          <div className="flex items-center space-x-4">
+            <div>
+              <h2 className="text-gray-600">Anunciante:</h2>
+              <p className="text-2xl font-bold text-[#2248FF]">{ticketDetails.nome_completo}</p>
+            </div>
+          </div>
+
           <div className="flex items-center space-x-4">
             <div>
               <h2 className="text-gray-600">Quantidade:</h2>
@@ -70,8 +78,8 @@ export default function TicketDetailsPage() {
 
           <div className="flex items-center space-x-4">
             <div>
-              <h2 className="text-gray-600">Valor (cada):</h2>
-              <p className="text-2xl font-bold text-[#2248FF]">R$ {ticketDetails.valor_un.toFixed(2)}</p>
+              <h2 className="text-gray-600">Tipo:</h2>
+              <p className="text-2xl font-bold text-[#2248FF]">{ticketDetails.tipo_ingresso}</p>
             </div>
           </div>
 
@@ -84,8 +92,8 @@ export default function TicketDetailsPage() {
 
           <div className="flex items-center space-x-4">
             <div>
-              <h2 className="text-gray-600">Anunciante:</h2>
-              <p className="text-2xl font-bold text-[#2248FF]">{ticketDetails.nome_completo}</p>
+              <h2 className="text-gray-600">Valor (cada):</h2>
+              <p className="text-2xl font-bold text-[#2248FF]">R$ {ticketDetails.valor_un.toFixed(2)}</p>
             </div>
           </div>
         </div>
