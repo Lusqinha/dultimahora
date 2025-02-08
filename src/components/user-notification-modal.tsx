@@ -45,7 +45,7 @@ export function UserNotificationsModal() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2 bg-[#FFC006] text-white hover:bg-[#FFC006]/70 hover:text-white"
+                <Button variant="outline" className="flex items-center gap-2 bg-[#2248FF] text-white hover:bg-[#2248FF]/70 hover:text-white"
                 > <BellDotIcon/> visualizar</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
