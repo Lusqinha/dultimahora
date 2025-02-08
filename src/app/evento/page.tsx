@@ -59,12 +59,14 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen px-4 pb-8 md:pt-10">
       <div className="flex md:hidden justify-center p-5 mb-8 border-b">
-        <Image
-          src={"/img/isologo-laranja.svg"}
-          alt="Logo do evento"
-          width={90}
-          height={90}
-        />
+        <a href="/">
+          <Image
+            src={"/img/isologo-laranja.svg"}
+            alt="Logo do evento"
+            width={90}
+            height={90}
+            />
+          </a>
       </div>
       <div className="max-w-4xl md:mt-10 mx-auto">
         <div className="relative mb-8 mx-2">
