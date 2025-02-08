@@ -17,6 +17,12 @@ export function TicketFormatPriceForm({ form }: TicketFormatPriceFormProps) {
         form.clearErrors()
     }, [form])
 
+    function formatPrice(value: string): string {
+        const num = parseFloat(value);
+        if (isNaN(num)) return "0.00";
+        return num.toFixed(2);
+    }
+
     return (
         <>
             <FormField
@@ -128,9 +134,13 @@ export function TicketFormatPriceForm({ form }: TicketFormatPriceFormProps) {
                                 {...field}
                                 // Only show error after user interaction
                                 onBlur={(e) => {
-                                    field.onBlur()
+                                    field.onBlur();
                                     if (!e.target.value) {
-                                        form.trigger("price")
+                                        form.trigger("price");
+                                    } else {
+                                        // Formatar o valor com dois decimais
+                                        const formattedValue = formatPrice(e.target.value);
+                                        field.onChange(formattedValue);
                                     }
                                 }}
                             />
