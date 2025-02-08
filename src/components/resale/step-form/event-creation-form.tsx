@@ -12,7 +12,7 @@ interface EventCreationFormProps {
 }
 
 export function EventCreationForm({ form, onValidityChange }: EventCreationFormProps) {
-    const [isValid, setIsValid] = useState(false)
+    const [, setIsValid] = useState(false)
 
     // Watch for changes in name and date fields
     useEffect(() => {
