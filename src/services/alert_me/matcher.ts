@@ -71,19 +71,18 @@ export async function matchKeyword(event_name: string, event_id: number) {
 
     const watchlists:Watchlist[] = [];
 
-    const words = event_name.split(' ').filter(word => !ignoreWords.includes(word.toLocaleLowerCase()));
+    const words = event_name.split(' ').filter(word => !ignoreWords.includes(word));
+
+    words.push(event_name);
+
+    console.log('Palavras a serem procuradas:', words);
 
     for (const word of words) {
         const founded_watchlists = await prisma.watchlist.findMany({
             where: {
                 keyword: {
-                    contains: word,
+                    contains: word.toLocaleLowerCase(),
                     mode: 'insensitive'
-                },
-                evento: {
-                    date: {
-                        gte: new Date(new Date().toDateString())
-                    }
                 }
             }
         })
