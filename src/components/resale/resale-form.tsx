@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 import { motion, AnimatePresence } from "framer-motion"
-import { Loader2, TicketsIcon } from "lucide-react"
+import { Loader2, TicketIcon as TicketsIcon } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -90,26 +90,27 @@ export function ResaleForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [eventsLoaded] = useState(false)
+  const [isEventFormValid, setIsEventFormValid] = useState(false) // Added state for form validity
   const form = useForm<z.infer<typeof formSchema>>({
+    // Changed to let
     resolver: zodResolver(formSchema),
     defaultValues: {
       format: "Digital",
     },
   })
 
-  
-
   const fetchEvents = useCallback(() => {
     if (!eventsLoaded) {
       api
-      .get("events")
-      .then((response) => {
-        setEvents(response.data)
-      })
-      .catch((error) => {
-        console.error(error)
-        toast.error("Erro ao carregar eventos. Tente novamente.")
-      })}
+        .get("events")
+        .then((response) => {
+          setEvents(response.data)
+        })
+        .catch((error) => {
+          console.error(error)
+          toast.error("Erro ao carregar eventos. Tente novamente.")
+        })
+    }
   }, [eventsLoaded])
 
   useEffect(() => {
@@ -203,6 +204,10 @@ export function ResaleForm() {
       if (currentStep === 0 && !selectedEvent) {
         setIsCreatingEvent(true)
         setCurrentStep(1) // Move to event creation step
+      } else if (currentStep === 1 && !selectedEvent && !isCreatingEvent) {
+        // Prevent advancing if no event is selected or being created
+        setIsLoading(false)
+        return
       } else {
         setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
       }
@@ -236,9 +241,12 @@ export function ResaleForm() {
 
   return (
     <div className="w-full max-w-2xl mx-auto md:pt-10">
-      <h1 className="text-2xl flex items-center justify-center gap-3 font-bold text-center text-[#2248FF] pb-6"><TicketsIcon />Revender Ingresso</h1>
+      <h1 className="text-2xl flex items-center justify-center gap-3 font-bold text-center text-[#2248FF] pb-6">
+        <TicketsIcon />
+        Revender Ingresso
+      </h1>
 
-      {(currentStep === 0) && (
+      {currentStep === 0 && (
         <div className="bg-[#FBC004] rounded-2xl p-4 mb-10">
           <p className="text-justify text-sm text-white font-bold [text-align-last:center]">
             {`O D'Ultimahora é uma plataforma para unir quem quer vender,
@@ -278,24 +286,24 @@ export function ResaleForm() {
               {currentStep === 1 && (
                 <div className="space-y-6">
                   {isCreatingEvent ? (
-                    <EventCreationForm form={form} />
+                    <EventCreationForm form={form} onValidityChange={setIsEventFormValid} />
                   ) : (
-                    <div className="space-y-4">
-                      <h3 className="font-bold">Evento Selecionado: </h3>
-                        
-                      {selectedEvent && <EventCard {...selectedEvent} />}
-                      
-                      <Button
-                        type="button"
-                          className="bg-[#2248ff] text-white hover:bg-[#2248ff]/90"  
-                        onClick={() => {
-                          setSelectedEvent(null)
-                          setCurrentStep(0)
-                        }}
-                      >
-                        Alterar Evento
-                      </Button>
-                    </div>
+                  <div className="space-y-4">
+                    <h3 className="font-bold">Evento Selecionado: </h3>
+
+                    {selectedEvent && <EventCard {...selectedEvent} />}
+
+                    <Button
+                      type="button"
+                      className="bg-[#2248ff] text-white hover:bg-[#2248ff]/90"
+                      onClick={() => {
+                        setSelectedEvent(null)
+                        setCurrentStep(0)
+                      }}
+                    >
+                      Alterar Evento
+                    </Button>
+                  </div>
                   )}
                 </div>
               )}
@@ -317,7 +325,11 @@ export function ResaleForm() {
                 type="button"
                 className="ml-auto bg-[#FBC004] text-white hover:bg-[#FBC004]/90"
                 onClick={handleNext}
-                disabled={isLoading}
+                disabled={
+                  isLoading ||
+                  (currentStep === 1 && !selectedEvent && !isCreatingEvent) ||
+                  (currentStep === 1 && isCreatingEvent && !isEventFormValid) // Updated disabled condition
+                }
               >
                 {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 Próximo
@@ -341,10 +353,12 @@ export function ResaleForm() {
           <DialogHeader>
             <DialogTitle>Anúncio criado com sucesso!</DialogTitle>
             <DialogDescription>
-              A senha do seu anúncio é:<br />
+              A senha do seu anúncio é:
+              <br />
               <strong>{password}</strong>
               <br />
-              Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro. (Tambem irá receber a senha Via WhatsApp)
+              Por favor, guarde esta senha em um local seguro. Você precisará dela para editar seu anúncio no futuro.
+              (Tambem irá receber a senha Via WhatsApp)
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

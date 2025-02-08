@@ -91,6 +91,7 @@ export function EventSearch({
                             )}
                             <FormMessage />
                             <div className="mt-4 text-center">
+                                <p className="text-sm text-muted-foreground">Se não encontrou seu evento, basta criá-lo <br />e anunciar seu ingresso!</p>
                                 <Button
                                     type="button"
                                     onClick={() => {

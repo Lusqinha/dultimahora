@@ -35,12 +35,13 @@ export function PersonalInfoForm({ form, formatCPF, formatPhone }: PersonalInfoF
                         <FormControl>
                             <Input
                                 {...field}
+                                value={field.value ? formatCPF(field.value) : ""}
                                 onChange={(e) => {
-                                    const formatted = formatCPF(e.target.value)
-                                    e.target.value = formatted
-                                    field.onChange(formatted.replace(/\D/g, ""))
+                                    const rawValue = e.target.value.replace(/\D/g, ""); // Remove caracteres especiais
+                                    field.onChange(rawValue); // Salva apenas números no estado
                                 }}
                                 maxLength={14}
+                                placeholder="000.000.000-00"
                             />
                         </FormControl>
                         <FormMessage />
@@ -53,17 +54,17 @@ export function PersonalInfoForm({ form, formatCPF, formatPhone }: PersonalInfoF
                 name="whatsapp"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Numero do seu Whatsapp *</FormLabel>
+                        <FormLabel>Número do seu WhatsApp *</FormLabel>
                         <FormControl>
                             <Input
-                                placeholder="(99) 99999-9999"
                                 {...field}
+                                value={field.value ? formatPhone(field.value) : ""}
                                 onChange={(e) => {
-                                    const formatted = formatPhone(e.target.value)
-                                    e.target.value = formatted
-                                    field.onChange(formatted.replace(/\D/g, ""))
+                                    const rawValue = e.target.value.replace(/\D/g, ""); // Remove caracteres especiais
+                                    field.onChange(rawValue); // Salva apenas números no estado
                                 }}
                                 maxLength={15}
+                                placeholder="(00) 00000-0000"
                             />
                         </FormControl>
                         <FormMessage />
@@ -71,6 +72,6 @@ export function PersonalInfoForm({ form, formatCPF, formatPhone }: PersonalInfoF
                 )}
             />
         </>
-    )
+    );
 }
 
