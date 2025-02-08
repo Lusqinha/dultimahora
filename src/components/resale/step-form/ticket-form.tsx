@@ -120,8 +120,10 @@ export function TicketFormatPriceForm({ form }: TicketFormatPriceFormProps) {
                         <FormControl>
                             <Input
                                 type="number"
-                                min="0"
-                                step="0.10"
+                                min="1"
+                                step="0.01"
+                                placeholder="R$"
+                                
                                 {...field}
                                 // Only show error after user interaction
                                 onBlur={(e) => {
