@@ -2,6 +2,7 @@
 
 import { KeywordNotificationModal } from "@/components/keyword-notification-modal"
 import { EventNotificationFlow } from "@/components/event-notification-flow"
+import { UserNotificationsModal } from "@/components/user-notification-modal"
 import { Card } from "@/components/ui/card"
 import { BellRing } from "lucide-react"
 import Image from "next/image"
@@ -54,8 +55,24 @@ export default function NotificationPage() {
                         </div>
                     </div>
                 </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-[#FFC006]">
+                    <div className="flex items-start gap-4">
+                        <div className="p-2 bg-[#FFC006]/10 rounded-lg">
+                            <BellRing className="w-6 h-6 text-[#FFC006]" />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-lg font-semibold text-[#2248FF] mb-1">Minhas Notificações</h2>
+                            <p className="text-gray-600 text-sm mb-4">
+                                Visualize e gerencie suas notificações ativas.
+                            </p>
+                            <UserNotificationsModal />
+                        </div>
+                    </div>
+                </Card>
             </div>
 
+            
             {/* Info Section */}
             <div className="mt-8 px-4 py-6 bg-white">
                 <div className="max-w-md mx-auto text-center">
