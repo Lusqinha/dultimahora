@@ -4,7 +4,7 @@ import { KeywordNotificationModal } from "@/components/keyword-notification-moda
 import { EventNotificationFlow } from "@/components/event-notification-flow"
 import { UserNotificationsModal } from "@/components/user-notification-modal"
 import { Card } from "@/components/ui/card"
-import { BellRing } from "lucide-react"
+import { BellDot, BellRing } from "lucide-react"
 import Image from "next/image"
 
 export default function NotificationPage() {
@@ -15,7 +15,7 @@ export default function NotificationPage() {
                 <div className="mb-8 md:hidden">
                     <a href="/">
 
-                    <Image src="/img/isologo-laranja.svg" alt="D'Ultima Hora Logo" width={90} height={90} priority />
+                        <Image src="/img/isologo-laranja.svg" alt="D'Ultima Hora Logo" width={90} height={90} priority />
                     </a>
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold text-[#2248FF] text-center mb-2">
@@ -59,10 +59,10 @@ export default function NotificationPage() {
                     </div>
                 </Card>
 
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-[#FFC006]">
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-[#2248FF]">
                     <div className="flex items-start gap-4">
-                        <div className="p-2 bg-[#FFC006]/10 rounded-lg">
-                            <BellRing className="w-6 h-6 text-[#FFC006]" />
+                        <div className="p-2 bg-[#2248FF]/10 rounded-lg">
+                            <BellDot className="w-6 h-6 text-[#2248FF]" />
                         </div>
                         <div className="flex-1">
                             <h2 className="text-lg font-semibold text-[#2248FF] mb-1">Minhas Notificações</h2>
