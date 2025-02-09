@@ -19,6 +19,8 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
 
   const ingressos = _count?.ingressos || 0
 
+  const ticket_count_bg = ingressos > 0 ? 'bg-[#FFC006]' : 'bg-gray-300'
+
   return (
     <Link href={`/evento/${id}`}>
       <Card className={`overflow-hidden bg-white hover:shadow-lg transition-shadow mx-auto min-h-full flex flex-col justify-between cursor-pointer`}>
@@ -29,8 +31,8 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
               alt={nome}
               className="w-full h-[200px] object-cover bg-black/40"
             />
-            <div className=" text-white flex items-center absolute top-0 right-0 bg-[#FFC006] rounded-bl-xl px-3 py-1">
-              <p className="bg-[#FFC006] flex items-center font-extrabold gap-1 rounded-full" >
+            <div className={` text-white flex items-center absolute top-0 right-0 ${ticket_count_bg} rounded-bl-xl px-3 py-2`}>
+              <p className={`${ticket_count_bg} flex items-center font-extrabold gap-1 rounded-full` }>
                 <span>{ingressos}</span>
                 <Image src="/img/ticket-event-card.svg" alt="Ingressos" width={15} height={15} />
               </p>  
