@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import EventCard from "@/components/event/event-card"
 import Image from "next/image"
 import { KeywordNotificationModal } from "@/components/keyword-notification-modal"
+import Link from "next/link"
 
 const ITEMS_PER_PAGE = 12
 
@@ -59,14 +60,15 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen px-4 pb-8 md:pt-10">
       <div className="flex md:hidden justify-center p-5 mb-8 border-b">
-        <a href="/">
+        <Link href="/">
           <Image
             src={"/img/isologo-laranja.svg"}
             alt="Logo do evento"
             width={90}
             height={90}
             />
-          </a>
+        </Link>
+
       </div>
       <div className="max-w-4xl md:mt-10 mx-auto">
         <div className="relative mb-8 mx-2">

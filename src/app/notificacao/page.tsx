@@ -6,6 +6,7 @@ import { UserNotificationsModal } from "@/components/user-notification-modal"
 import { Card } from "@/components/ui/card"
 import { BellDot, BellRing } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function NotificationPage() {
     return (
@@ -13,10 +14,9 @@ export default function NotificationPage() {
             {/* Header Section */}
             <div className="flex flex-col items-center pt-8 pb-6 px-4 md:mt-8">
                 <div className="mb-8 md:hidden">
-                    <a href="/">
-
+                    <Link href="/">
                         <Image src="/img/isologo-laranja.svg" alt="D'Ultima Hora Logo" width={90} height={90} priority />
-                    </a>
+                    </Link>
                 </div>
                 <h1 className="text-2xl md:text-3xl font-bold text-[#2248FF] text-center mb-2">
                     {`Receba notificações de eventos no D'`}
