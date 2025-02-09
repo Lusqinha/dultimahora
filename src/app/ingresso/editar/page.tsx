@@ -20,7 +20,7 @@ import type { Ingresso } from "@prisma/client"
 import { useState } from "react"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
-import { Loader2, UserCircle2, Pencil, Trash2, Check } from "lucide-react"
+import { Loader2, UserCircle2, Pencil, Trash2, Check, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { BackArrow } from "@/components/layout/back-arrow"
 import type React from "react"
@@ -179,10 +179,18 @@ export default function EditTicketPage() {
           </Card>
 
           {/* Edit Form Dialog */}
+          {/* add back arrow to set showEditForm false*/}
           <AlertDialog open={showEditForm} onOpenChange={setShowEditForm}>
             <AlertDialogContent className="max-w-xl">
               <AlertDialogHeader>
                 <AlertDialogTitle>Editar Anúncio</AlertDialogTitle>
+                {/* close button */}
+                <button
+                  onClick={() => setShowEditForm(false)}
+                  className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
               </AlertDialogHeader>
               {ticketDetails && (
                 <EditTicketForm
