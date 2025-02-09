@@ -17,7 +17,7 @@ export function DesktopNav() {
         },
         {
             href: "/ingresso/editar",
-            label: "Meu Ingresso",
+            label: "Meu anúncio",
             icon: Tag,
         },
         {
