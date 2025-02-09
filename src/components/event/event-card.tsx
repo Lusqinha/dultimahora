@@ -31,7 +31,7 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
               alt={nome}
               className="w-full h-[200px] object-cover bg-black/40"
             />
-            <div className={` text-white flex items-center absolute top-0 right-0 ${ticket_count_bg} rounded-bl-xl px-3 py-2`}>
+            <div className={` text-white flex items-center absolute top-0 right-0 ${ticket_count_bg} rounded-bl-xl px-2 py-2`}>
               <p className={`${ticket_count_bg} flex items-center font-extrabold gap-1 rounded-full` }>
                 <span>{ingressos}</span>
                 <Image src="/img/ticket-event-card.svg" alt="Ingressos" width={15} height={15} />
