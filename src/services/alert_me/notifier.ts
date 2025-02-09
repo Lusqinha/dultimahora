@@ -17,7 +17,7 @@ export async function notifyTicketCreated(ticket: Ingresso) {
 
 Se precisar de qualquer ajuda, estamos à disposição! 💬😊
 
-🔗 *Acesse o link abaixo para editar seu ingresso:*  
+🔗 *Acesse o link abaixo para editar, remover ou confirmar a venda seu ingresso:*  
 
 
 https://dultimahora.fluxstudio.com.br/ingresso/editar 
