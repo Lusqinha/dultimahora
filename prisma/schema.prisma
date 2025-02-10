@@ -19,7 +19,7 @@ model Ingresso {
   tipo_ingresso String
   formato_ingresso String
   disponivel Boolean @default(true)
-  codigo_ingresso String @default(cuid()) @unique
+  codigo_ingresso String @default(dbgenerated("(substring(md5(random()::text), 1, 6))")) @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
