@@ -1,5 +1,6 @@
 import { sendWhatsappMessage } from "./sender";
 import type { Ingresso } from "@prisma/client";
+import { host } from "@/lib/env";
 import prisma from "@/lib/db";
 
 export async function notifyTicketCreated(ticket: Ingresso) {
@@ -13,14 +14,14 @@ export async function notifyTicketCreated(ticket: Ingresso) {
 
     const message = `🎟️✨ Olá, *${ticket.nome_completo}*! Seu ingresso${event_text} foi criado com sucesso! 🚀🥳  
 
-🔑 *Código de edição:* ${ticket.codigo_ingresso}  
+🔑 *Código de edição:* \n ${ticket.codigo_ingresso}  
 
 Se precisar de qualquer ajuda, estamos à disposição! 💬😊
 
 🔗 *Acesse o link abaixo para editar, remover ou confirmar a venda seu ingresso:*  
 
 
-https://dultimahora.fluxstudio.com.br/ingresso/editar 
+${host}/ingresso/editar 
 `;
 
     sendWhatsappMessage(ticket.contato_whatsapp, message);
