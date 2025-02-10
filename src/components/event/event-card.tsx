@@ -26,9 +26,13 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
       <Card className={`overflow-hidden bg-white hover:shadow-lg transition-shadow mx-auto min-h-full flex flex-col justify-between cursor-pointer`}>
         <CardContent className="p-0"> 
           <div className="relative">
-            <img 
-              src={banner_path || 'banners/dultimahora-evento-placeholder.png'} 
+            <Image 
+              src={banner_path || '/banners/dultimahora-evento-placeholder.png'}
               alt={nome}
+              height={200}
+              width={320}
+              placeholder="blur"
+              blurDataURL="/banners/dultimahora-evento-placeholder.png"
               className="w-full h-[200px] object-cover bg-black/40"
             />
             <div className={` text-white flex items-center absolute top-0 right-0 ${ticket_count_bg} rounded-bl-xl px-2 py-1`}>
