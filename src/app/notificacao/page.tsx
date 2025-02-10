@@ -10,9 +10,9 @@ import Link from "next/link"
 
 export default function NotificationPage() {
     return (
-        <div className="min-h-screen md:pt-10">
+        <div className="min-h-screen md:pt-24">
             {/* Header Section */}
-            <div className="flex flex-col items-center pt-6 mb-4 px-4 md:mt-8 border-b border-gray-200 w-11/12 mx-auto">
+            <div className="flex flex-col md:hidden items-center pt-6 mb-4 px-4 border-b border-gray-200 w-11/12 mx-auto">
                 <div className="mb-6 md:hidden">
                     <Link href="/">
                         <Image src="/img/isologo-laranja.svg" alt="D'Ultima Hora Logo" width={90} height={90} priority />
