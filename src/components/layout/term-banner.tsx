@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
+import Link from 'next/link'
 
 export function TermsBanner() {
   const [showBanner, setShowBanner] = useState(false)
@@ -28,7 +29,8 @@ export function TermsBanner() {
           {`O D'Ultimahora é uma plataforma que une vendedores e compradores. 
           Ao usar nossos serviços, você concorda em tomar precauções durante as negociações, 
           como escolher locais públicos para encontros e verificar a autenticidade das ofertas. 
-          A plataforma não se responsabiliza por transações entre usuários.`}
+          A plataforma não se responsabiliza por transações entre usuários.\n
+          Ao clicar em`} "Aceitar Termos", você concorda com os <Link href={"/termos"} className='underline' >termos de uso e a política de privacidade</Link> do {`D'Ultimahora`}.
         </p>
         <div className="flex items-center">
           <Button 
