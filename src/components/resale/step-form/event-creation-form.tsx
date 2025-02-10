@@ -5,8 +5,7 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { ChangeEvent, useEffect, useState } from "react"
-import * as nsfwjs from 'nsfwjs';
-import * as tf from '@tensorflow/tfjs';
+import { load as nsfwLoad} from 'nsfwjs';
 
 interface EventCreationFormProps {
     form: any // Replace 'any' with the actual form type
@@ -40,7 +39,7 @@ export function EventCreationForm({ form, onValidityChange }: EventCreationFormP
             const image = new Image();
             image.src = URL.createObjectURL(file);
             image.onload = async () => {
-                const model = await nsfwjs.load();
+                const model = await nsfwLoad("MobileNetV2Mid");
                 const predictions = await model.classify(image);
                 const nsfwPrediction = predictions.find(prediction => prediction.className === 'Porn' || prediction.className === 'Hentai' || prediction.className === 'Sexy');
                 if (nsfwPrediction && nsfwPrediction.probability > 0.6) {
