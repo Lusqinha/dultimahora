@@ -38,6 +38,7 @@ export function Footer() {
                     <div className="text-center md:text-right text-sm">
                         <p>{`© 2025 por D'Ultimahora.`}</p>
                         <p>Todos os direitos reservados.</p>
+                <Link href="/termos" className="text-center block underline text-xs"> Termos de uso e política de privacidade</Link>
                     </div>
                 </div>
             </div>
