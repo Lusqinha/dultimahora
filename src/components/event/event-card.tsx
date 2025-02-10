@@ -29,8 +29,8 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
             <Image 
               src={banner_path || '/banners/dultimahora-evento-placeholder.png'}
               alt={nome}
+              width={400}
               height={200}
-              width={320}
               placeholder="blur"
               blurDataURL="/banners/dultimahora-evento-placeholder.png"
               className="w-full h-[200px] object-cover bg-black/40"
