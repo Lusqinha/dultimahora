@@ -4,7 +4,9 @@
 
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
+import * as nsfwjs from 'nsfwjs';
+import * as tf from '@tensorflow/tfjs';
 
 interface EventCreationFormProps {
     form: any // Replace 'any' with the actual form type
@@ -13,13 +15,17 @@ interface EventCreationFormProps {
 
 export function EventCreationForm({ form, onValidityChange }: EventCreationFormProps) {
     const [, setIsValid] = useState(false)
+    const [warningMessage, setWarningMessage] = useState<string | null>(null)
 
     // Watch for changes in name and date fields
     useEffect(() => {
         const subscription = form.watch((value: any) => {
             const nameValid = value.name && value.name.length >= 2
             const dateValid = value.date && value.date.length > 0
-            const formIsValid = nameValid && dateValid
+            console.log('nameValid', nameValid)
+            console.log('dateValid', dateValid)
+            console.log('warningMessage', warningMessage)
+            const formIsValid = nameValid && dateValid && !warningMessage
 
             setIsValid(formIsValid)
             onValidityChange?.(formIsValid)
@@ -27,6 +33,28 @@ export function EventCreationForm({ form, onValidityChange }: EventCreationFormP
 
         return () => subscription.unsubscribe()
     }, [form, onValidityChange])
+
+    const handleImageChange = async (file: File | null, e:ChangeEvent<HTMLInputElement>) => {
+        if (file) {
+            setWarningMessage('Verificando conteúdo da imagem...');
+            const image = new Image();
+            image.src = URL.createObjectURL(file);
+            image.onload = async () => {
+                const model = await nsfwjs.load();
+                const predictions = await model.classify(image);
+                const nsfwPrediction = predictions.find(prediction => prediction.className === 'Porn' || prediction.className === 'Hentai' || prediction.className === 'Sexy');
+                if (nsfwPrediction && nsfwPrediction.probability > 0.6) {
+                    setWarningMessage('A imagem selecionada pode conter conteúdo impróprio.');
+                    e.target.value = '';
+                    form.setValue('banner', null);
+                } else {
+                    setWarningMessage(null);
+                }
+            };
+        } else {
+            setWarningMessage(null);
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -73,7 +101,9 @@ export function EventCreationForm({ form, onValidityChange }: EventCreationFormP
                                 ref={field.ref}
                                 onChange={(e) => {
                                     const file = e.target.files?.[0];
-                                    field.onChange(file || null);
+                                    handleImageChange(file || null, e)
+                                    field.onChange(file|| null);
+
                                 }}
                             />
                         </FormControl>
@@ -81,6 +111,11 @@ export function EventCreationForm({ form, onValidityChange }: EventCreationFormP
                     </FormItem>
                 )}
             />
+            {warningMessage && (
+                <div className="text-red-500">
+                    {warningMessage}
+                </div>
+            )}
         </div>
     )
 }
