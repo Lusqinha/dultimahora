@@ -135,7 +135,7 @@ export default function EditTicketPage() {
     return (
       <main className="min-h-screen flex items-center flex-col justify-center px-4">
         <BackArrow />
-        <div className="max-w-md mx-auto space-y-6">
+        <div className="max-w-md mx-auto">
           {/* User Profile Card */}
           <Card className="border-none shadow-md">
             <CardContent className="pt-6">
