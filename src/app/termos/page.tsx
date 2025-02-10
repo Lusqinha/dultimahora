@@ -23,7 +23,7 @@ export default function TermsPage() {
                 <Card className="p-6 space-y-8">
                     <div className="prose prose-sm max-w-none">
                         <p className="text-gray-600 mb-6">
-                            Estes Termos e Condições regulam o uso da plataforma D'UltimaHora. Ao acessar e utilizar a plataforma,
+                            Estes Termos e Condições regulam o uso da plataforma {`D'UltimaHora`}. Ao acessar e utilizar a plataforma,
                             você concorda com estes termos na íntegra. Caso discorde de qualquer parte, recomendamos que não utilize
                             nossos serviços.
                         </p>
@@ -32,7 +32,7 @@ export default function TermsPage() {
                             <h2 className="text-xl font-semibold text-[#2248FF] mb-4">1. Sobre a Plataforma</h2>
                             <div className="space-y-4 text-gray-600">
                                 <p>
-                                    O D'UltimaHora é uma plataforma online que facilita a conexão entre pessoas interessadas em vender e
+                                    O {`D'UltimaHora`} é uma plataforma online que facilita a conexão entre pessoas interessadas em vender e
                                     comprar ingressos para eventos.
                                 </p>
                                 <p>
@@ -46,7 +46,7 @@ export default function TermsPage() {
                             <h2 className="text-xl font-semibold text-[#2248FF] mb-4">2. Funcionamento da Plataforma</h2>
                             <div className="space-y-4 text-gray-600">
                                 <p>
-                                    O D'UltimaHora atua exclusivamente como um intermediário, conectando vendedores e compradores de
+                                    O {`D'UltimaHora`} atua exclusivamente como um intermediário, conectando vendedores e compradores de
                                     ingressos.
                                 </p>
                                 <p>
@@ -54,7 +54,7 @@ export default function TermsPage() {
                                     preferencialmente pelo WhatsApp.
                                 </p>
                                 <p>
-                                    O D'UltimaHora não participa, não interfere e não se responsabiliza por qualquer transação realizada
+                                    O {`D'UltimaHora`} não participa, não interfere e não se responsabiliza por qualquer transação realizada
                                     entre os usuários.
                                 </p>
                                 <p>
@@ -101,7 +101,7 @@ export default function TermsPage() {
                                     quaisquer perdas, danos ou inconvenientes decorrentes do uso ou indisponibilidade da plataforma.
                                 </p>
                                 <p>
-                                    O D'UltimaHora não se responsabiliza pela autenticidade dos ingressos vendidos pelos usuários nem por
+                                    O {`D'UltimaHora`} não se responsabiliza pela autenticidade dos ingressos vendidos pelos usuários nem por
                                     qualquer problema decorrente das negociações realizadas fora da plataforma.
                                 </p>
                             </div>
@@ -116,7 +116,7 @@ export default function TermsPage() {
                                 </p>
                                 <p>Para receber notificações, o usuário deve fornecer nome e número de telefone de forma voluntária.</p>
                                 <p>
-                                    O D'UltimaHora compromete-se a utilizar esses dados apenas para fins de comunicação relacionada à
+                                    O {`D'UltimaHora`} compromete-se a utilizar esses dados apenas para fins de comunicação relacionada à
                                     plataforma, garantindo a proteção das informações conforme a legislação vigente.
                                 </p>
                             </div>
