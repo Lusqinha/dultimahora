@@ -3,6 +3,7 @@ import { TermsBanner } from "@/components/layout/term-banner";
 import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
 import "./globals.css";
+import { host } from "@/lib/env"
 import { DesktopNav } from "@/components/layout/desktop-nav";
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: "https://dultimahora.fluxstudio.com.br/",
+    url: `${host}`,
     title: "D'Ultima Hora | Santa Maria",
     description: "No D'Ultimahora você pode revender seu ingresso de shows/eventos e também encontrar ingressos para vender! Encontre lotes anteriores, valores abaixo, ingressos limitados e opções melhores!",
     siteName: "D'Ultima Hora",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     
     images: [
       {
-        url: "https://dultimahora.fluxstudio.com.br/img/og-dultima.png",
+        url: `${host}/img/og-dultima.png`,
         width: 1296,
         height: 579,
         alt: "Og Image",
@@ -30,14 +31,14 @@ export const metadata: Metadata = {
   twitter: {
     images: [
       {
-        url: "https://dultimahora.fluxstudio.com.br/img/og-dultima.png",
+        url: `${host}/img/og-dultima.png`,
         width: 1296,
         height: 579,
         alt: "Og Image",
       },
     ],
     card: "summary_large_image",
-    site: "https://dultimahora.fluxstudio.com.br/",
+    site: `${host}`,
     title: "D'Ultima Hora | Santa Maria",
     description: "No D'Ultimahora você pode revender seu ingresso de shows/eventos e também encontrar ingressos para vender! Encontre lotes anteriores, valores abaixo, ingressos limitados e opções melhores!",
     siteId: "@dultimahora.app",
