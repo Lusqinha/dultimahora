@@ -14,7 +14,7 @@ export default function TermsPage() {
                         <Shield className="w-8 h-8" />
                         <h1 className="text-2xl font-bold text-center">Termos e Condições</h1>
                     </div>
-                    <p className="text-center text-sm opacity-90">Última atualização: 10 de Fevereiro de 2024</p>
+                    <p className="text-center text-sm opacity-90">Última atualização: 10 de Fevereiro de 2025</p>
                 </div>
             </div>
 
