@@ -85,26 +85,24 @@ export function EventSearch({
                                 </div>
                             )}
                             {field.value && searchResults.length === 0 && (
-                                <div className="mt-4 text-center">
-                                    <p className="text-sm text-muted-foreground mb-4">Nenhum evento encontrado com esse nome.</p>
+                                <div className="my-4 text-center">
+                                    <p className="text-sm mb-1 text-muted-foreground">Se não encontrou seu evento, basta criá-lo <br />e anunciar seu ingresso!</p>
+                                    <Button
+                                        type="button"
+                                        onClick={() => {
+                                            setIsCreatingEvent(true)
+                                            setCurrentStep(1)
+                                        }}
+                                        variant="outline"
+                                        className="gap-2 text-[#2248FF] hover:text-[#0030B3]"
+                                    >
+                                        <Plus className="h-4 w-4" />
+                                        Criar novo evento
+                                    </Button>
                                 </div>
+
                             )}
                             <FormMessage />
-                            <div className="mt-4 text-center">
-                                <p className="text-sm text-muted-foreground">Se não encontrou seu evento, basta criá-lo <br />e anunciar seu ingresso!</p>
-                                <Button
-                                    type="button"
-                                    onClick={() => {
-                                        setIsCreatingEvent(true)
-                                        setCurrentStep(1)
-                                    }}
-                                    variant="outline"
-                                    className="gap-2 text-[#2248FF] hover:text-[#0030B3]"
-                                >
-                                    <Plus className="h-4 w-4" />
-                                    Criar novo evento
-                                </Button>
-                            </div>
                         </FormItem>
                     )}
                 />
