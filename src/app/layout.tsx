@@ -3,8 +3,9 @@ import { TermsBanner } from "@/components/layout/term-banner";
 import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
 import "./globals.css";
-import { host } from "@/lib/env"
+import { host, GAID } from "@/lib/env"
 import { DesktopNav } from "@/components/layout/desktop-nav";
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 export const metadata: Metadata = {
   title: "D'Ultima Hora | Santa Maria",
@@ -67,6 +68,7 @@ export default function RootLayout({
         <Footer />
         <BottomNav/>
       </body>
+      <GoogleAnalytics gaId={GAID} />
     </html>
   );
 }
