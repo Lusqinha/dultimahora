@@ -62,13 +62,22 @@ export async function GET() {
       }
     },
     orderBy: {
-      ingressos: {
-        _count: 'desc',
-      }
+      date: 'asc'
     }
   });
 
-  return NextResponse.json(events);
+  const sortedEvents = events.sort((a: { _count: { ingressos: number } }, b: { _count: { ingressos: number } }) => {
+    if (a._count.ingressos > 0 && b._count.ingressos === 0) return -1
+    if (a._count.ingressos === 0 && b._count.ingressos > 0) return 1
+    return 0
+  })
+
+
+  events.forEach((event) => {
+    event._count.ingressos = event.ingressos.reduce((acc, ingresso) => acc + ingresso.qtd_ingressos, 0);
+  });
+
+  return NextResponse.json(sortedEvents);
 }
 
 export async function POST(req: NextRequest) {
