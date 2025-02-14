@@ -1,4 +1,4 @@
-import { EventRegistrationForm } from "@/components/event-form";
+import { EventRegistrationForm } from "@/components/event/event-form";
 
 export default function CreateEventPage() {
     return (

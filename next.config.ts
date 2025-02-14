@@ -9,4 +9,13 @@ const nextConfig: NextConfig = {
   }
 };
 
+module.exports = {
+  images: {
+    domains: ['startups-minio.x2vfeh.easypanel.host',
+      'minio.dultimahora.online',
+      'dultimahora-minio.flkkfw.easypanel.host'
+    ],
+  },
+};
+
 export default nextConfig;

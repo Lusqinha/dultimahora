@@ -1,72 +1,79 @@
 "use client"
 
-import { ActionButton } from "@/components/action-button"
-import { WaveDivider } from "@/components/wave-divider"
-import EventCard from "@/components/event-card"
-import { type Evento } from "@prisma/client"
-import { Search, Ticket } from 'lucide-react'
+import { Hero } from "@/components/home/hero"
+import EventCard from "@/components/event/event-card"
+import type { Evento } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { api } from "@/lib/api"
-import Link from "next/link"
+import useEmblaCarousel from "embla-carousel-react"
+import { Button } from "@/components/ui/button"
+import { CalendarHeartIcon, ChevronLeft, ChevronRight } from "lucide-react"
+import { AdBanner } from "@/components/home/ad-banner"
+import { AboutUs } from "@/components/home/about-us"
+import { ContactUs } from "@/components/home/contact-us"
 
 export default function HomePage() {
-
   const [events, setEvents] = useState<Evento[]>([])
-  useEffect(() => {
-    api.get('events', {}).then((response) => {
-      setEvents(response.data)
-    })}, [])
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true, skipSnaps: false })
 
+  useEffect(() => {
+    api.get<Evento[]>("/events").then((response) => {
+      setEvents(response.data)
+    })
+  }, [])
+
+  const scrollPrev = () => emblaApi && emblaApi.scrollPrev()
+  const scrollNext = () => emblaApi && emblaApi.scrollNext()
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-[url('/img/bg-hero.jpg')] bg-no-repeat bg-center bg-cover">
+    <main className="min-h-screen overflow-x-hidden">
+      <Hero />
+      <section className="w-full bg-white rounded-t-2xl -mt-5">
 
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pb-32">
-
-          <h1 className="mb-12 text-lg md:text-xl font-bold text-white text-center drop-shadow-2xl shadow-green-600">
-            Pra resolver o teu rolê em
-            <br />
-            <span className="text-[#FBC004] text-5xl font-extrabold">Santa Maria</span>
-          </h1>
-
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-            <Link href="/evento">
-              <ActionButton className="w-full md:w-auto text-white font-extrabold"
-                icon={<Search className="w-6 h-6" />}
-              >
-                Encontrar ingressos
-              </ActionButton>
-            </Link>
-            <Link href="/revender">
-              <ActionButton className="w-full md:w-auto text-white font-extrabold"
-                icon={<Ticket className="w-6 h-6" />}
-              >
-                Revender meu ingresso
-              </ActionButton>
-            </Link>
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0">
-          <WaveDivider />
-        </div>
-      </section>
-
-      {/* Events Section */}
-      <section className="bg-white py-16 px-4">
+      <section className="py-16 w-11/12 mx-auto">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#3F7EA7] text-center mb-12">
-            Eventos Disponíveis
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {events.map((event) => (
-              <EventCard key={event.id} {...event} />
-            ))}
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2248FF] text-center mb-8 flex items-center justify-center gap-2"><CalendarHeartIcon />{`Eventos em D'estaque`}</h2>
+          <div className="relative">
+            <div className="overflow-hidden" ref={emblaRef}>
+              <div className="flex">
+                {events.slice(0,4).map((event) => (
+                  <div
+                  key={event.id}
+                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] px-4"
+                  >
+                    <EventCard
+                      _count={{
+                        ingressos: 0,
+                      }}
+                      {...event}
+                      />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2"
+              onClick={scrollPrev}
+              >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2"
+              onClick={scrollNext}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
+      <AdBanner className="w-11/12 md:w-3/5 mx-auto mt-5" />
+      <AboutUs />
+      <ContactUs className="w-11/12 mx-auto mb-5"/>
+    </section>
     </main>
   )
 }

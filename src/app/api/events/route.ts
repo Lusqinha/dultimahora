@@ -1,4 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+import { matchKeyword } from "@/services/alert_me/matcher";
+
 import AWS from 'aws-sdk';
 
 import prisma from "@/lib/db";
@@ -35,6 +37,12 @@ const uploadImageToMinio = async (file: File) => {
 
 export async function GET() {
   const events = await prisma.evento.findMany({
+    where: {
+      date: {
+        // Filtra eventos que ainda não aconteceram, pegando a data atual, ignorando a hora
+        gte: new Date(new Date().toDateString())
+      }
+    },
     select: {
       id: true,
       nome: true,
@@ -43,18 +51,36 @@ export async function GET() {
       banner_path: true,
       ingressos: true,
       _count: {
-        select: { ingressos: true }
+        select: {
+          ingressos: {
+            where: {
+              qtd_ingressos: {
+                gt: 0
+              }
+            }
+        }},
       }
     },
     orderBy: {
-      date: 'asc',
+      date: 'asc'
     }
   });
 
-  return NextResponse.json(events);
+  const sortedEvents = events.sort((a: { _count: { ingressos: number } }, b: { _count: { ingressos: number } }) => {
+    if (a._count.ingressos > 0 && b._count.ingressos === 0) return -1
+    if (a._count.ingressos === 0 && b._count.ingressos > 0) return 1
+    return 0
+  })
+
+
+  events.forEach((event) => {
+    event._count.ingressos = event.ingressos.reduce((acc, ingresso) => acc + ingresso.qtd_ingressos, 0);
+  });
+
+  return NextResponse.json(sortedEvents);
 }
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   const formData = await req.formData();
   console.log("Payload recebido:", formData);
 
@@ -81,6 +107,9 @@ export async function POST(req: NextResponse) {
       banner_path: file_path,
     }
   });
+
+  // Verificar se o evento possui uma keyword
+  matchKeyword(evento.nome, evento.id);
 
   return NextResponse.json(evento, { status: 201 });
 }

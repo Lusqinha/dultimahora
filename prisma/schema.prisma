@@ -19,7 +19,7 @@ model Ingresso {
   tipo_ingresso String
   formato_ingresso String
   disponivel Boolean @default(true)
-  codigo_ingresso String @default(cuid()) @unique
+  codigo_ingresso String @default(dbgenerated("(substring(md5(random()::text), 1, 6))")) @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,15 +39,28 @@ model Evento {
 
   ingressos Ingresso[]
   vendas Venda[]
+  watchlists Watchlist[]
 }
 
 model Venda {
   id        Int      @id @default(autoincrement())
   ingresso    Ingresso   @relation(fields: [ingressoId], references: [id])
   ingressoId  Int
+  qtd_ingressos_vendidos Int
   codigo_ingresso String @unique
   evento    Evento   @relation(fields: [eventoId], references: [id])
   eventoId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Watchlist {
+  id        Int      @id @default(autoincrement())
+  nome_completo String
+  contato_whatsapp String
+  keyword String?
+  evento    Evento?   @relation(fields: [eventoId], references: [id])
+  eventoId  Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
