@@ -5,8 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { host, GAID } from "@/lib/env"
 import { DesktopNav } from "@/components/layout/desktop-nav";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import PlausibleProvider from 'next-plausible'
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 export const metadata: Metadata = {
   title: "D'Ultima Hora | Santa Maria",
@@ -59,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <head>
-        <PlausibleProvider domain={host} />
+        <script defer data-domain="dultimahora.com" src="https://dultimahora-plausible-analytics.flkkfw.easypanel.host/js/script.js"></script>
       </head>
       <body
         className={` antialiased bg-white overflow-x-hidden` }
