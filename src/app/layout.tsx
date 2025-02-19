@@ -5,7 +5,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { host, GAID } from "@/lib/env"
 import { DesktopNav } from "@/components/layout/desktop-nav";
-import { GoogleAnalytics } from "@next/third-parties/google"
+import { GoogleAnalytics } from "@next/third-parties/google";
+import PlausibleProvider from 'next-plausible'
 
 export const metadata: Metadata = {
   title: "D'Ultima Hora | Santa Maria",
@@ -56,6 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <PlausibleProvider domain={host}>
     <html lang="pt-br" suppressHydrationWarning>
       <body
         className={` antialiased bg-white overflow-x-hidden` }
@@ -69,6 +71,7 @@ export default function RootLayout({
         <BottomNav/>
       </body>
       <GoogleAnalytics gaId={GAID} />
-    </html>
+      </html>
+    </PlausibleProvider>
   );
 }
