@@ -3,7 +3,7 @@ import { TermsBanner } from "@/components/layout/term-banner";
 import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
 import "./globals.css";
-import { host, GAID } from "@/lib/env"
+import { host, plausible_domain, GAID } from "@/lib/env"
 import { DesktopNav } from "@/components/layout/desktop-nav";
 import { GoogleAnalytics } from "@next/third-parties/google"
 
@@ -58,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <head>
-        <script defer data-domain="dultimahora.com" src="https://dultimahora-plausible-analytics.flkkfw.easypanel.host/js/script.js"></script>
+        <script defer data-domain={plausible_domain} src="https://dultimahora-plausible-analytics.flkkfw.easypanel.host/js/script.js"></script>
       </head>
       <body
         className={` antialiased bg-white overflow-x-hidden` }
