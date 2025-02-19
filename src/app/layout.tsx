@@ -57,8 +57,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <PlausibleProvider domain={host}>
     <html lang="pt-br" suppressHydrationWarning>
+      <head>
+        <PlausibleProvider domain={host} />
+      </head>
       <body
         className={` antialiased bg-white overflow-x-hidden` }
       >
@@ -71,7 +73,6 @@ export default function RootLayout({
         <BottomNav/>
       </body>
       <GoogleAnalytics gaId={GAID} />
-      </html>
-    </PlausibleProvider>
+    </html>
   );
 }
