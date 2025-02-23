@@ -1,6 +1,6 @@
 {
-  "name": "dultimahora-mvp",
-  "version": "0.1.0",
+  "name": "dultimahora",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -9,6 +9,9 @@
     "lint": "next lint",
     "test": "jest",
     "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -45,7 +48,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@premieroctet/next-admin-generator-prisma": "^0.0.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
