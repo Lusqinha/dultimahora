@@ -11,8 +11,7 @@ export async function notifyTicketCreated(ticket: Ingresso) {
     });
 
     const event_text = event ? ` para o evento ${event.nome} 🎉` : " ";
-
-    const message = `🎟️✨ Olá, *${ticket.nome_completo}*! Seu ingresso${event_text} foi criado com sucesso! 🚀🥳  
+    const message = `🎟️✨ Olá, *${ticket.nome_completo.trimEnd().trimStart()}*! Seu ingresso${event_text} foi criado com sucesso! 🚀🥳  
 
 🔑 *Código de edição:* \n ${ticket.codigo_ingresso}  
 
