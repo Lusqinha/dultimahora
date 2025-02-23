@@ -7,6 +7,8 @@ WORKDIR /app
 # Copie o arquivo package.json e pnpm-lock.yaml para o diretório de trabalho
 COPY package.json pnpm-lock.yaml ./
 
+COPY prisma prisma
+
 # Instale pnpm globalmente
 RUN npm install -g pnpm
 
@@ -18,7 +20,6 @@ COPY . .
 
 # Defina a variável de ambiente para produção
 ENV NODE_ENV=production
-ENV DATABASE_URL="file:./dev.db"
 
 # Execute o build do projeto
 RUN pnpm run build

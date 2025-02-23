@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: dultimahora_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dultimahora
+    ports:
+      - "5432:5432" # Porta externa 1007 -> Porta interna 5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - dultimahora_network
+
+  app:
+    build: .
+    container_name: dultimahora_app
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - dultimahora_network
+
+volumes:
+  pg_data:
+
+networks:
+  dultimahora_network:
+    driver: bridge
