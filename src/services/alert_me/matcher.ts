@@ -4,7 +4,7 @@ import type { Watchlist } from "@prisma/client";
 import prisma from "@/lib/db";
 
 const ignoreWords = [
-    'a', 'o', 'e', 'é', 'de', 'do', 'da', 'em', 'para', 'por', 'com', 'sem', 'que', 'na', 'no', 'as', 'os', 'um', 'uma', 'uns', 'umas', 'ao', 'aos', 'à', 'às', 'pelo', 'pela', 'pelos', 'pelas'
+    'a', 'o', 'e', 'é', 'de', 'do', 'da', 'em', 'para', 'por', 'com', 'sem', 'que', 'na', 'no', 'as', 'os', 'um', 'uma', 'uns', 'umas', 'ao', 'aos', 'à', 'às', 'pelo', 'pela', 'pelos', 'pelas', ' '
 ];
 
 export interface CheckData {
