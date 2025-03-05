@@ -15,14 +15,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import { CalendarDaysIcon } from "lucide-react"
 
 
-export default function EventCard({ id, nome, date, banner_path, _count }: Evento) {
-
+export default function EventCard({ id, nome, date, banner_path, _count, clickable }: Evento & { clickable?: boolean }) {
   const ingressos = _count?.ingressos || 0
+
+  const is_clickable = clickable ?? true
 
   const ticket_count_bg = ingressos > 0 ? 'bg-[#FFC006]' : 'bg-gray-300'
 
-  return (
-    <Link href={`/evento/${id}`}>
+  // Como tornar um card não clicável
+
+  const cardFrameContent = (
       <Card className={`overflow-hidden bg-white hover:shadow-lg transition-shadow mx-auto min-h-full flex flex-col justify-between cursor-pointer`}>
         <CardContent className="p-0"> 
           <div className="relative">
@@ -56,7 +58,13 @@ export default function EventCard({ id, nome, date, banner_path, _count }: Event
           </div>
         </CardContent>
       </Card>
-    </Link>
   )
+
+  return is_clickable ? (
+    <Link href={`/evento/${id}`}>
+      {cardFrameContent}
+    </Link>
+  ) : cardFrameContent
+
 }
 

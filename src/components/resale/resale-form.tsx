@@ -291,7 +291,7 @@ export function ResaleForm() {
                   <div className="space-y-4">
                     <h3 className="font-bold">Evento Selecionado: </h3>
 
-                    {selectedEvent && <EventCard {...selectedEvent} />}
+                    {selectedEvent && <EventCard {...selectedEvent} clickable={false} />}
 
                     <Button
                       type="button"
