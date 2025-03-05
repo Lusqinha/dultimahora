@@ -100,6 +100,17 @@ export async function POST(req: NextRequest) {
 
   console.log("data:", formData.get("date"));
 
+  const exist_same_event = await prisma.evento.findFirst({
+    where: {
+      nome: formData.get("nome") as string,
+      date: new Date(formData.get("date") as string),
+    }
+  });
+
+  if (exist_same_event) {
+    return NextResponse.json({ error: 'Evento já cadastrado' }, { status: 400 });
+  }
+
   const evento = await prisma.evento.create({
     data: {
       nome: formData.get("nome") as string,
