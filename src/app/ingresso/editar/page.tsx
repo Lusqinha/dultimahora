@@ -251,7 +251,7 @@ export default function EditTicketPage() {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction onClick={handleConfirmSale} className="bg-green-500 hover:bg-green-600">
+                <AlertDialogAction onClick={handleConfirmSale} className="bg-green-500 hover:bg-green-600 plausible-event-name=confirma_venda">
                   Confirmar
                 </AlertDialogAction>
               </AlertDialogFooter>

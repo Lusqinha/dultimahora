@@ -102,7 +102,7 @@ export default function TicketDetailsPage() {
         <div className="space-y-2">
           <Button
             onClick={handleWhatsAppClick}
-            className="w-full bg-green-500 hover:bg-green-600 text-white py-6 text-lg flex items-center justify-center"
+            className="w-full bg-green-500 hover:bg-green-600 text-white py-6 text-lg flex items-center justify-center plausible-event-name=chama_whatsapp"
           >
             <MessageCircle className="mr-2" />
             Chamar no WhatsApp
